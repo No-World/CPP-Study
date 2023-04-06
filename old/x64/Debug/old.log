@@ -1,0 +1,8 @@
+﻿  01.cpp
+C:\Users\Leo\source\repos\c++study\old\01.cpp(8,18): warning C4838: 从“__int64”转换到“int”需要收缩转换
+C:\Users\Leo\source\repos\c++study\old\01.cpp(8,18): warning C4309: “初始化”: 截断常量值
+C:\Users\Leo\source\repos\c++study\old\01.cpp(9,6): warning C4838: 从“__int64”转换到“int”需要收缩转换
+C:\Users\Leo\source\repos\c++study\old\01.cpp(9,6): warning C4309: “初始化”: 截断常量值
+C:\Users\Leo\source\repos\c++study\old\01.cpp(10,6): warning C4838: 从“__int64”转换到“int”需要收缩转换
+C:\Users\Leo\source\repos\c++study\old\01.cpp(10,6): warning C4309: “初始化”: 截断常量值
+  old.vcxproj -> C:\Users\Leo\source\repos\c++study\old\x64\Debug\old.exe
