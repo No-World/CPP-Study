@@ -1,0 +1,311 @@
+const int LO = 1 << 20 | 1;
+char buffer[LO],*S,*TT;
+#define getchar() ((S==TT&&(TT=(S=buffer)+fread(buffer,1,LO,stdin),S==TT))?EOF:*S++)
+
+namespace Fio {
+    inline std::string sread() {
+        std::string s = " ";
+        char e = getchar();
+        while (!isdigit(e) && !isalpha(e) && e != '*') e = getchar();
+        while (isdigit(e) || isalpha(e) || e == '*') s += e, e = getchar();
+        return s;
+    }
+    
+    inline int read() {
+        int x = 0, y = 1;
+        char c = getchar();
+        while (!isdigit(c)) {
+            if (c == '-') y = -1;
+            c = getchar();
+        }
+        while (isdigit(c)) {
+            x = (x << 3) + (x << 1) + (c ^ 48);
+            c = getchar();
+        }
+        return x *= y;
+    }
+    
+    inline ll readll() {
+        ll x = 0, y = 1;
+        char c = getchar();
+        while (!isdigit(c)) {
+            if (c == '-') y = -1;
+            c = getchar();
+        }
+        while (isdigit(c)) {
+            x = (x << 3) + (x << 1) + (c ^ 48);
+            c = getchar();
+        }
+        return x *= y;
+    }
+    inline void write(ll x) {
+        if (x < 0) x = -x, putchar('-');
+        ll sta[35], top = 0;
+        do sta[top++] = x % 10, x /= 10;
+        while (x);
+        while (top) putchar(sta[--top] + '0');
+        putchar('\n');
+    }
+    
+    inline void write(int x) {
+        if (x < 0) x = -x, putchar('-');
+        int sta[35], top = 0;
+        do sta[top++] = x % 10, x /= 10;
+        while (x);
+        while (top) putchar(sta[--top] + '0');
+        putchar('\n');
+    }
+} using namespace Fio;
+
+int n , m, _;
+int ans = INF;
+
+int d1[] = {0, 0, 1, -1};
+int d2[] = {1, -1, 0, 0};
+
+int a[N];
+
+int mx[N << 2], mx2[N << 2], mxcnt[N << 2];
+int mn[N << 2], mn2[N << 2], mncnt[N << 2];
+ll sum[N << 2];
+ll lazy[N << 2];
+
+int max(int a, int b){return a > b ? a : b;}
+int min(int a, int b){return a < b ? a : b;}
+
+inline void pushup(int u){
+	int ls = u << 1, rs = u << 1 | 1;
+	sum[u] = sum[ls] + sum[rs];
+	if(mx[ls] > mx[rs]){//左儿子最大值大
+		mx[u] = mx[ls];
+		mxcnt[u] = mxcnt[ls];
+		mx2[u] = max(mx2[ls], mx[rs]);
+	}else if(mx[ls] < mx[rs]){
+		mx[u] = mx[rs];
+		mxcnt[u] = mxcnt[rs];
+		mx2[u] = max(mx2[rs], mx[ls]);
+	}else{
+		mx[u] = mx[ls];
+		mxcnt[u] = mxcnt[ls] + mxcnt[rs];
+		mx2[u] = max(mx2[ls], mx2[rs]);
+	}
+
+	if(mn[ls] < mn[rs]){
+		mn[u] = mn[ls];
+		mncnt[u] = mncnt[ls];
+		mn2[u] = min(mn[rs], mn2[ls]);
+	}else if(mn[ls] > mn[rs]){
+		mn[u] = mn[rs];
+		mncnt[u] = mncnt[rs];
+		mn2[u] = min(mn[ls], mn2[rs]);
+	}else{
+		mn[u] = mn[ls];
+		mncnt[u] = mncnt[ls] + mncnt[rs];
+		mn2[u] = min(mn2[ls], mn2[rs]);
+	}
+}
+
+bool update_max(int u, int v, int L, int R){
+	if(mn[u] >= v)	return true;
+	
+	if(mx[u] == mn[u]){//区间只有一个数值
+		sum[u] = 1ll * v * (R - L + 1);
+		mxcnt[u] = mncnt[u] = R - L + 1;
+		mx2[u] = -INF; mn2[u] = INF;
+		mx[u] = mn[u] = v;
+		return true;
+	}
+	
+	if(mn2[u] > v){//区间次小值大于v所以直接修改区间最小值
+		sum[u] += 1ll * mncnt[u] * (v - mn[u]);
+		mn[u] = v;
+		mx2[u] = max(v, mx2[u]);
+		return true;
+	}
+	
+	return false;
+}
+
+bool update_min(int u, int v, int L, int R){
+	//std::cout << u << ' ' << L << ' ' << R << '\n';
+	if(mx[u] <= v)	return true;
+	
+	if(mx[u] == mn[u]){
+		sum[u] = 1ll * v * (R - L + 1);
+		mxcnt[u] = mncnt[u] = R - L + 1;
+		mx2[u] = -INF; mn2[u] = INF;
+		mx[u] = mn[u] = v;
+		return true;
+	}
+	
+	if(mx2[u] < v){
+		sum[u] += 1ll * (v - mx[u]) * mxcnt[u];
+		mx[u] = v;
+		mn2[u] = min(mn2[u], v);
+		return true;
+	}
+	
+	return false;
+}
+
+inline void pushdown(int u, int L, int R){
+	if(lazy[u]){
+		mx[ls(u)] += lazy[u], mx2[ls(u)] += lazy[u], mn[ls(u)] += lazy[u], mn2[ls(u)] += lazy[u];
+		mx[rs(u)] += lazy[u], mx2[rs(u)] += lazy[u], mn[rs(u)] += lazy[u], mn2[rs(u)] += lazy[u];
+		int mid = L + R >> 1;
+		sum[ls(u)] += 1ll * lazy[u] * (mid - L + 1);
+		sum[rs(u)] += 1ll * lazy[u] * (R - mid);
+		lazy[u << 1] += lazy[u];
+		lazy[u << 1 | 1] += lazy[u];
+		lazy[u] = 0;
+	}
+	
+	int mid = L + R >> 1;
+	if(mx[ls(u)] > mx[u])	update_min(ls(u), mx[u], L, mid);
+	
+	if(mx[rs(u)] > mx[u])	update_min(rs(u), mx[u], mid + 1, R);
+	
+	if(mn[ls(u)] < mn[u])	update_max(ls(u), mn[u], L, mid);
+	
+	if(mn[rs(u)] < mn[u])	update_max(rs(u), mn[u], mid + 1, R);
+}
+
+inline void build_tree(int u, int L, int R){
+	if(L == R){
+		mx[u] = mn[u] = sum[u] = read();
+		mxcnt[u] = mncnt[u] = 1;
+		mx2[u] = -INF; mn2[u] = INF;
+		return ;
+	}
+	
+	int mid = L + R >> 1;
+	build_tree(u << 1, L, mid);
+	build_tree(u << 1 | 1, mid + 1, R);
+
+	pushup(u);
+}
+
+inline void add(int u, int L, int R, int l, int r, int x){
+	if(L >= l && R <= r){
+		sum[u] += 1ll * (R - L + 1) * x;
+		mx[u] += x; mx2[u] += x; mn[u] += x; mn2[u] += x;
+		lazy[u] += x;
+		return ;
+	}
+
+	pushdown(u, L, R);
+	
+	int mid = L + R >> 1;
+	if(l <= mid)	add(u << 1, L, mid, l, r, x);
+	if(r > mid)	add(u << 1 | 1, mid + 1, R, l, r, x);
+	
+	pushup(u);
+}
+
+inline void modifymin(int u, int L, int R, int l, int r, int x){
+	if(L >= l && R <= r && update_min(u, x, L, R))	return ;
+	
+	pushdown(u, L, R);
+	int mid = L + R >> 1;
+	
+	if(l <= mid)	modifymin(u << 1, L, mid, l, r, x);
+	if(r > mid)	modifymin(u << 1 | 1, mid + 1, R, l, r, x);
+	
+	pushup(u);
+}
+
+inline void modifymax(int u, int L, int R, int l, int r, int x){
+	if(L >= l && R <= r && update_max(u, x, L, R))	return ;
+	
+	
+	pushdown(u, L, R);
+	int mid = L + R >> 1;
+	
+	if(l <= mid)	modifymax(u << 1, L, mid, l, r, x);
+	if(r > mid)	modifymax(u << 1 | 1, mid + 1, R, l, r, x);
+	
+	pushup(u);
+}
+
+inline ll querysum(int u, int L, int R, int l, int r){
+	if(L >= l && R <= r) return sum[u];
+	
+	pushdown(u, L, R);
+	
+	int mid = L + R >> 1;
+	ll res = 0;
+	if(l <= mid)	res += querysum(u << 1, L, mid, l, r);
+	if(r > mid)	res += querysum(u << 1 | 1, mid + 1, R, l, r);
+	
+	pushup(u);
+	
+	return res;
+}
+
+inline int querymax(int u, int L, int R, int l, int r){
+	if(L >= l && R <= r) return mx[u];
+	
+	pushdown(u, L, R);
+	
+	int mid = L + R >> 1;
+	int res = -INF;
+	if(l <= mid)	res = max(res, querymax(u << 1, L, mid, l, r));
+	if(r > mid)	res = max(res, querymax(u << 1 | 1, mid + 1, R, l, r));
+	
+	pushup(u);
+	
+	return res;
+}
+
+inline int querymin(int u, int L, int R, int l, int r){
+	if(L >= l && R <= r) return mn[u];
+	
+	pushdown(u, L, R);
+	
+	int mid = L + R >> 1;
+	int res = INF;
+	if(l <= mid)	res = min(res, querymin(u << 1, L, mid, l, r));
+	if(r > mid)	res = min(res, querymin(u << 1 | 1, mid + 1, R, l, r));
+	
+	pushup(u);
+	
+	return res;
+}
+
+inline void solve(){
+	n = read();
+
+	
+	build_tree(1, 1, n);
+	m = read();
+	while(m --){
+		int op, l, r, x;
+		op = read(), l = read(), r = read();
+		if(op == 1){
+			x = read();
+			add(1, 1, n, l, r, x);
+		}else if(op == 2){
+			x = read();
+			modifymax(1, 1, n, l, r, x);
+		}else if(op == 3){
+			x = read();
+			modifymin(1, 1, n, l, r, x);
+		}else if(op == 4){
+			write(querysum(1, 1, n, l, r));
+		}else if(op == 5){
+			write(querymax(1, 1, n, l, r));
+		}else{
+			write(querymin(1, 1, n, l, r));
+		}
+	}
+}
+
+int main(){
+   	
+	_ = 1;
+   	//_ = read();
+	while(_ --)
+    	solve();
+
+    return 0;
+}

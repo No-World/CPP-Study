@@ -1,23 +1,38 @@
-#include <cstdio>
-#include <cstring>
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-char s[510];
+typedef long long ll;
+const ll MOD = 1000000007;
+const int MAXM = 100005;
+
+int n, ma, mb;
+int a[MAXM], b[MAXM];
+ll ans = 0, bac = 1;
+
 int main()
 {
-    scanf("%s", s + 1);
-    int len = strlen(s + 1);
-    for (int i = 1; i <= len; i++)
+    cin >> n;
+    cin >> ma;
+    for (int i = 1; i <= ma; i++)
     {
-        if (s[i] <= 'z' && s[i] >= 'a')
-        {
-            printf("%c", s[i] - 'a' + 'A');
-        }
-        else
-        {
-            printf("%c", s[i] - 'A' + 'a');
-        }
+        cin >> a[i];
     }
-
+    cin >> mb;
+    for (int i = 1; i <= mb; i++)
+    {
+        cin >> b[i];
+    }
+    int i = ma, j = mb;
+    while (i > 0)
+    {
+        ans += (a[i] - b[j]) * bac;
+        ans %= MOD;
+        ll p = max(a[i], b[j]) + 1;
+        bac *= max(p, 2LL);
+        bac %= MOD;
+        i--;
+        if (j)
+            j--;
+    }
+    cout << ans << endl;
     return 0;
 }

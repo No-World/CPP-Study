@@ -1,0 +1,67 @@
+//解决动态求逆序对问题
+struct node{
+	int l, r, cnt;
+}tr[N * 200];
+
+struct Fenwick_Segment_Tree{//权值线段树动态开点加树状数组
+	int idx;
+	//s是树状数组需要用到的根节点
+	int S[N], maxm;
+	//查询时用到的两个数组
+	
+	inline void init(){
+		idx = 0;
+	}
+	
+	inline void clear(){
+		for(int i = 0; i <= n; i ++)	S[i] = 0;
+	}
+	
+	inline int lowbit(int x) {return x & -x;}
+	
+	//需要用到的上一个版本root[i - 1](返回的值是当前版本的root) l,r是离散化后的区间范围 需要添加的离散化后的值x sum是添加的数量
+	inline int insert(int p, int l, int r, int x, int sum){
+		if(!p){
+			p = ++ idx;
+			tr[p] = {0, 0, 0};	
+		}	
+		if(l == r){
+			tr[p].cnt += sum;//新版本的信息加1
+			return p;
+		}
+		int mid = l + r >> 1;
+		if(x <= mid)	tr[p].l = insert(tr[p].l, l, mid, x, sum);//在左子树则需要更新信息，否则保留原本信息就可以
+		else tr[p].r = insert(tr[p].r, mid + 1, r, x, sum);
+		tr[p].cnt = tr[tr[p].l].cnt + tr[tr[p].r].cnt;
+		return p;
+	}
+	
+	//位置为p 改变离散化后值为x的数量 数量
+	inline void add(int p, int x, int sum){
+		//maxm是树状数组数据离散化后的范围
+		while(p <= maxm){
+			S[p] = insert(S[p], 1, maxm, x, sum);
+			p += lowbit(p);
+		}
+	}
+	
+	inline int query(int p, int L, int R, int val){
+		if(!p)	return 0;
+		if(L > val)	return 0;
+		if(R <= val)	return tr[p].cnt;
+		int mid = L + R >> 1;
+		if(mid <= val)
+			return query(tr[p].l, L, mid, val) + query(tr[p].r, mid + 1, R, val);
+		return query(tr[p].l, L, mid, val);
+	}
+	//flag 表示是查询哪个数组 1 表示qr数组 0表示ql数组 查询的是左半边修改的数量总和
+	inline int Sum(int x, int val){
+		int res = 0;
+		while(x){
+			res += query(S[x], 1, maxm, val);
+			x -= lowbit(x);
+		}
+		return res;
+	}
+
+}FS;

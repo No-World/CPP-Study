@@ -1,0 +1,80 @@
+int idx, n , m, root;
+
+
+struct node{
+    int v, p;
+    int flag, s[2], size;
+    void init(int _v, int _p){// 初始化新建结点
+        v = _v;
+        p = _p;
+        size = 1;
+    }
+}tr[N];
+
+void pushup(int u){//上传更新信息
+    tr[u].size = tr[tr[u].s[0]].size + tr[tr[u].s[1]].size + 1;
+}
+
+void pushdown(int u){//下传更新信息
+    if(tr[u].flag){
+        swap(tr[u].s[0], tr[u].s[1]);
+        tr[tr[u].s[0]].flag ^= 1;
+        tr[tr[u].s[1]].flag ^= 1;
+        tr[u].flag = 0;
+    }
+}
+
+void rotate(int x){//左旋右旋函数
+    int y = tr[x].p, z = tr[y].p;
+    int k = tr[y].s[1] == x;//k为0代表是父节点的左节点,k为1代表室父节点的右节点
+    tr[z].s[tr[z].s[1] == y] = x, tr[x].p = z;//更新x的父节点和y的子节点x应在的位置
+    tr[y].s[k] = tr[x].s[k ^ 1], tr[tr[x].s[k ^ 1]].p = y;//更新x的另一条边的父节点为y
+    tr[x].s[k ^ 1] = y, tr[y].p = x;//更新x的子节点y的信息,和y的父节点为为x的信息
+    pushup(y), pushup(x);
+}
+
+void splay(int x, int k){//将下标为x的旋转到下标为k的下面
+    while(tr[x].p != k){
+        int y = tr[x].p, z = tr[y].p;
+        if(z != k)
+            if((tr[z].s[0] == y) ^ (tr[y].s[0] == x))   rotate(x);//如果是折线先旋转x
+            else rotate(y);//如果是一条直线那么先旋转y
+        rotate(x);
+    }
+    if(!k)  root = x;
+}
+
+void insert(int v){
+    int u = root, p = 0;
+    while(u)    p = u, u = tr[u].s[v > tr[u].v];//决定v应该去u的左儿子还是右儿子
+    u = ++ idx;
+    if(p)  tr[p].s[v > tr[p].v] = u;//决定u应该去p的左儿子还是右儿子
+    tr[u].init(v, p);
+    splay(u, 0);
+}
+
+void output(int u){
+    pushdown(u);
+    if(tr[u].s[0]) output(tr[u].s[0]);
+    if(tr[u].v >= 1 && tr[u].v <= n)    cout << tr[u].v << ' ';
+    if(tr[u].s[1])  output(tr[u].s[1]);
+}
+
+/*
+                 k
+                / \
+ tr[u<<1].size    
+ 如果左子树个数>=k 则去左子树里看
+ 如果左子树个数=k-1,则u就是中序遍历第k个点
+ 否则去右子树里看,k-=tr[u<<1].size-1
+*/
+int get_k(int k){
+    int u = root;
+    while(true){
+        pushdown(u);
+        if(tr[tr[u].s[0]].size >= k)    u = tr[u].s[0];
+        else if(tr[tr[u].s[0]].size + 1 == k)   return u;
+        else k -= tr[tr[u].s[0]].size + 1, u = tr[u].s[1];
+    }
+    return -1;
+}

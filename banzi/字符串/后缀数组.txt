@@ -1,0 +1,59 @@
+int s[M];
+struct SA{
+	std::vector<int> sa, x, rk, height, c, y;
+ 	SA(int n) : sa(n, 0), x(n, 0), rk(n, 0), height(n, 0), c(n, 0), y(n, 0) {};
+	inline void get_sa(){
+	    for(int i = 1; i <= m; i ++) c[i] = 0;
+	    for(int i = 1; i <= n; i ++)    c[x[i] = s[i]] ++;
+	    for(int i = 2; i <= m; i ++)    c[i] += c[i - 1];
+	    for(int i = n; i; i --)     sa[c[x[i]] --] = i;//数组的值代表的排名，下标代表在原数组的哪个位置
+	 
+	    for(int k = 1; k <= n; k <<= 1){
+	        int num = 0;
+	        for(int i = n - k + 1; i <= n; i ++) y[++ num] = i;
+	        for(int i = 1; i <= n; i ++)    
+	            if(sa[i] > k)   //排名为i的数组下标大于k   
+	                y[++ num] = sa[i] - k;//排名为i的第二关键字的第一关键字位置
+	 
+	        for(int i = 1; i <= m; i ++)    c[i] = 0;
+	        for(int i = 1; i <= n; i ++)    c[x[i]] ++;
+	        for(int i = 2; i <= m; i ++)    c[i] += c[i - 1];
+	        for(int i = n; i; i --) sa[c[x[y[i]]] --] = y[i], y[i] = 0;
+	        //sa记录上述排名对应的下标为 y[i]，从后往前枚举第二关键字的排名，使得第一关键字相同的后缀也可以依靠第二关键字区分
+	         
+	        swap(x, y);//接下来需要更新x数组，但是y数组没用了，所以把信息转移到y数组
+	        x[sa[1]] = 1, num = 1;
+	        for(int i = 2; i <= n; i ++)
+	            x[sa[i]] = (y[sa[i - 1]] == y[sa[i]] && y[sa[i] + k] == y[sa[i - 1] + k]) ? num : ++ num;
+	 
+	        if(num == n)    break;
+	        m = num;//更新离散化后的rank范围
+	    }
+	}
+ 
+	inline void get_height(){
+	    for(int i = 1; i <= n; i ++)    rk[sa[i]] = i;
+	    for(int i = 1, k = 0; i <= n; i ++){
+	        if(rk[i] == 1)  continue;
+	        if(k)  k --;
+	        int j = sa[rk[i] - 1];///排名在i前一个的后缀的下标
+	        while(i + k <= n && j + k <= n && s[i + k] == s[j + k]) k ++;
+	        height[rk[i]] = k;
+	    }
+	}
+	
+	inline void init(){
+		for(int i = 1; i <= n; i ++)	s[i] -= 'a' - 1;
+		m = 40;
+		get_sa();
+		get_height();
+	}
+	
+	inline ll query(){//求本质不同子串数量
+		ll res = 0;
+		for(int i = 1; i <= n; i ++)	res += n - sa[i] + 1 - height[i];
+		return res;
+	}
+};
+
+SA Sa(M);

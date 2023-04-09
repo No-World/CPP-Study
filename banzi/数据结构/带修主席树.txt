@@ -1,0 +1,91 @@
+struct node{
+	int l, r, cnt;
+}tr[N * 21];
+
+struct Modify_Historical_Segment_Tree{
+	int idx;
+	//s是树状数组需要用到的根节点
+	int root[N], S[N], maxm, stk[N], top;
+	//查询时用到的两个数组
+	int qr[N], ql[N];
+	
+	inline void init(){
+		idx = top = 0;
+	}
+	
+	inline int lowbit(int x) {return x & -x;}
+	
+	inline int build(int l, int r){
+		int q = ++ idx;
+		tr[q].cnt = 0;
+		if(l == r)	return q;
+		int mid = l + r >> 1;
+		tr[q].l = build(l, mid);//存的是左儿子的编号并非边界
+		tr[q].r = build(mid + 1, r);
+		return q;
+	}
+	//需要用到的上一个版本root[i - 1](返回的值是当前版本的root) l,r是离散化后的区间范围 需要添加的离散化后的值x sum是添加的数量
+	inline int insert(int p, int l, int r, int x, int sum){
+		int q = ++ idx;
+		tr[q] = tr[p];//复制上一个节点的信息
+		if(l == r){
+			tr[q].cnt += sum;//新版本的信息加1
+			return q;
+		}
+		int mid = l + r >> 1;
+		if(x <= mid)	tr[q].l = insert(tr[p].l, l, mid, x, sum);//在左子树则需要更新信息，否则保留原本信息就可以
+		else tr[q].r = insert(tr[p].r, mid + 1, r, x, sum);
+		tr[q].cnt = tr[tr[q].l].cnt + tr[tr[q].r].cnt;
+		return q;
+	}
+	
+	//位置为p 改变离散化后值为x的数量 数量
+	inline void add(int p, int x, int sum){
+		//maxm是树状数组数据离散化后的范围
+		while(p <= maxm){
+			S[p] = insert(S[p], 1, maxm, x, sum);
+			p += lowbit(p);
+		}
+	}
+	//flag 表示是查询哪个数组 1 表示qr数组 0表示ql数组 查询的是左半边修改的数量总和
+	inline int Sum(int x, int flag){
+		int res = 0;
+		while(x){
+			if(flag)	res += tr[tr[qr[x]].l].cnt;
+			else res += tr[tr[ql[x]].l].cnt;
+			x -= lowbit(x);
+		}
+		return res;
+	}
+
+	//我们需要查询1 - lt这个区间在树状数组中左半边修改的总数量所以一般传入l - 1
+	//我们需要查询1 - nw这个区间在树状数组中左半边修改的总数量
+	// lt nw 是需要去树状数组里面求的版本号所以不用每次query不用改
+	inline int query(int lt, int nw, int p, int q, int l, int r, int k){//区间k小
+		if(l == r)	return l;
+		int mid = l + r >> 1;
+		int cnt = Sum(nw, 1) - Sum(lt, 0) + tr[tr[q].l].cnt - tr[tr[p].l].cnt;
+		//std::cout << l << ' ' << r << " sum = " << Sum(nw, 1) - Sum(lt, 0) << '\n';
+		//std::cout << k << " sumy = " <<  tr[tr[q].l].cnt - tr[tr[p].l].cnt << '\n';
+		if(cnt >= k){
+			//因为区间是逐渐缩小的，所有我们对应 方便Sum去求一个子区间的修改的总数量
+			for(int i = nw; i; i -= lowbit(i))	qr[i] = tr[qr[i]].l;
+			for(int i = lt; i; i -= lowbit(i))	ql[i] = tr[ql[i]].l;
+			return query(lt, nw, tr[p].l, tr[q].l, l, mid, k);
+		}	
+		else{
+			for(int i = nw; i; i -= lowbit(i))	qr[i] = tr[qr[i]].r;
+			for(int i = lt; i; i -= lowbit(i))	ql[i] = tr[ql[i]].r;
+			return query(lt, nw, tr[p].r, tr[q].r, mid + 1, r, k - cnt);
+		} 
+	}
+	
+	inline int querysum(int p, int q, int L, int R, int l, int r){//查询不带修的状态
+		if(L >= l && R <= r)	return tr[q].cnt - tr[p].cnt;
+		int mid = L + R >> 1;
+		int cnt = 0;
+		if(l <= mid)	cnt += querysum(tr[p].l, tr[q].l, L, mid, l, r);
+		if(r > mid)		cnt += querysum(tr[p].r, tr[q].r, mid + 1, R, l, r);
+		return cnt;
+	}
+}MHST;

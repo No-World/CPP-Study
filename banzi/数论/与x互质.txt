@@ -1,0 +1,22 @@
+std::vector<int> pm;
+
+int div(int x){//分解质因数
+    pm.clear();
+    for(int i = 2; i * i <= x; i ++){
+        if(x % i == 0) pm.push_back(i);
+        while(x % i == 0)  x /= i;
+    }
+    if(x > 1)   pm.push_back(x);
+}
+ll getans(int x){//x里面有多少个和pm互质的数字
+    ll res = 0;
+    int sz = pm.size();
+    for(int i = 1; i < (1 << sz); i ++){
+        ll t = 0, v = 1;
+        for(int j = 0; j < sz; j ++)
+            if((i >> j) & 1)    v *= pm[j], t ^= 1;
+        res += x / v * (t ? 1 : - 1);
+    }
+
+    return res;
+}

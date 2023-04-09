@@ -1,0 +1,13 @@
+void Init(){
+    for(int i = 0; i < M; i ++){
+        for(int j = 1; j + (1 << i) - 1 <= n; j ++)
+            if(!i)  f[j][i] = a[j];
+            else f[j][i] = __gcd(f[j][i - 1], f[j + (1 << i - 1)][i - 1]);
+    }
+}
+ 
+int query(int l, int r){
+    int len = r - l + 1;
+    int k = log(len) / log(2);
+    return __gcd(f[l][k], f[r - (1 << k) + 1][k]);
+}

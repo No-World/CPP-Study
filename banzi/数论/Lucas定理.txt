@@ -1,0 +1,28 @@
+ll fastpow(ll a, ll b, ll mod){
+   ll res = 1;
+
+   while(b){
+       if(b & 1)   res = res * a % mod;
+       b >>= 1;
+       a = a * a % mod;
+   }
+
+   return res;
+}
+
+int getC(int a, int b, int p){//求组合数
+    if(b > a)   return 0;
+
+    int res = 1;
+    for (int i = 1, j = a; i <= b; i ++, j -- )
+    {
+        res = (ll)res * j % p;
+        res = (ll)res * fastpow(i, p - 2, p) % p;
+    }
+    return res;
+}
+
+ll lucas(ll n, ll m, int p){//n和m非常大, p是个质数, n是C的底数m是C的上面数字
+    if(m == 0)  return 1;
+    return lucas(n / p, m / p, p) * getC(n % p, m % p, p) % p;
+}

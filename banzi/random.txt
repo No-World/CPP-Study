@@ -1,0 +1,3 @@
+std::random_device rd;
+std::default_random_engine eng(rd());
+std::uniform_int_distribution<int> distr(0, 1);

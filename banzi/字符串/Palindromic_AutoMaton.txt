@@ -1,0 +1,58 @@
+struct Palindromic_AutoMaton{
+    //basic
+    int s[N], now;
+    int nxt[N][26], fail[N], l[N], last, tot, mask[N];
+    // extension
+    int num[N];/*节点代表的所有回文串出现次数*/
+    inline void clear(){
+        //1节点：奇数长度root 0节点：偶数长度root
+        s[0] = l[1] = -1;
+        fail[0] = tot = now = 1;
+        last = l[0] = 0;
+        memset(nxt[0], 0, sizeof nxt[0]);
+        memset(nxt[1], 0, sizeof nxt[1]);
+    }
+    Palindromic_AutoMaton(){clear();}//创建pam时一定会进行的操作
+    inline int newnode(int l1, int mark){
+        tot++;
+        mask[tot] = mark; 
+        memset(nxt[tot], 0, sizeof nxt[tot]);
+        fail[tot] = num[tot] = 0;
+        l[tot] = l1;
+        return tot;
+    }
+    inline int get_fail(int x){
+        while (s[now - l[x] - 2] != s[now - 1])	x = fail[x];
+        return x;
+    }
+    inline void add(int ch){
+        s[now ++] = ch;
+        int cur = get_fail(last);
+        if(!nxt[cur][ch]){
+        	int mark = mask[cur] | (1 << ch);
+            int tt = newnode(l[cur] + 2, mark);
+            fail[tt] = nxt[get_fail(fail[cur])][ch];
+            nxt[cur][ch] = tt;
+        }
+        last = nxt[cur][ch];	num[last]++;
+    }
+    inline void build(){
+        //fail[i]<i，拓扑更新可以单调扫描。
+        for (int i = tot; i >= 2; i --){
+            num[fail[i]] += num[i];
+        }
+        num[0] = num[1] = 0;
+    }
+    inline void init(char* ss){
+        while(*ss){
+            add(*ss - 'a');	
+            ss++;
+        }
+    }
+    inline void init(std::string str){
+        for (int i = 0; i < str.size(); i ++){
+            add(str[i] - 'a');
+        }
+    }
+    ll query();
+}pam;

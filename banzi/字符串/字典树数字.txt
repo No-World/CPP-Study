@@ -1,0 +1,36 @@
+struct Trie{
+	int ch[M][2], tot, cnt[M];
+
+	void insert(int num){
+		int p = 0;
+		for(int i = 30; i >= 0; i --){
+			int now = (num >> i) & 1;
+			if(!ch[p][now])	ch[p][now] = ++ tot;
+			p = ch[p][now]; 
+		}
+		cnt[p] ++;
+	}
+	
+	bool find(int num){
+		int p = 0;
+		for(int i = 30; i >= 0; i --){
+			int now = (num >> i) & 1;
+			if(!ch[p][now])	return false;
+			p = ch[p][now];
+		}
+		if(!cnt[p])	return false;//不存在
+		return true;
+	}
+
+	bool del(int num){
+		int p = 0;
+		for(int i = 30; i >= 0; i --){
+			int now = (num >> i) & 1;
+			if(!ch[p][now])	return false;
+			p = ch[p][now];
+		}
+		if(!cnt[p])	return false;//不存在
+		cnt[p] --;
+		return true;
+	}
+}trie;

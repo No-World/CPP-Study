@@ -1,0 +1,12 @@
+int merge(int x, int y, int L, int R) {
+    if (!x || !y)
+        return x + y;
+        
+    int u = ++cnt;
+    
+    tr[u].l = merge(tr[x].l, tr[y].l, L, R);
+    tr[u].r = merge(tr[x].r, tr[y].r, L, R);
+    pushup(u);
+    
+    return u;
+}

@@ -1,0 +1,53 @@
+int h[N], ne[M], e[M], dis[N], w[M], idx, cnt[N], stk[N], top, dfn[N], low[N], timedelta, id[N], scc_cnt, SIZE[N], out[N];
+bool in_stk[N];
+
+void add(int a, int b){
+   ne[idx] = h[a], e[idx] = b, h[a] = idx++;
+}
+
+void targan(int u){
+    dfn[u] = low[u] = ++ timedelta;
+    stk[++ top] = u, in_stk[u] = true;
+    for(int i = h[u]; ~i; i = ne[i]){
+        int j = e[i];
+        if(!dfn[j]){
+            targan(j);
+            low[u] = min(low[u], low[j]);
+        }else if(in_stk[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if(low[u] == dfn[u]){
+        int y;
+        scc_cnt ++;
+        do{
+            y = stk[top --];
+            SIZE[scc_cnt] ++;
+            id[y] = scc_cnt;
+            in_stk[y] = false;
+        }while(y != u);
+    }
+}
+
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    cin >> n >> m;
+    memset(h, -1, sizeof h);
+    for(int i = 1; i <= m; i ++){
+        int a, b;
+        cin >> a >> b;
+        add(a, b);
+    }
+
+    for(int i = 1; i <=n ; i ++)
+        if(!dfn[i])
+            targan(i);
+
+    for(int i = 1; i <= n; i ++)
+        for(int j = h[i]; ~j; j = ne[j]){
+            int k = e[j];
+            int a = id[i], b = id[k];
+            if(a != b){//不在一个强联通分量里面
+                out[a] ++;
+            }
+        }

@@ -1,0 +1,14 @@
+inline int merge(int p, int q, int L, int R){
+	if(!p)	return q;
+	if(!q)	return p;
+	if(L == R){
+		tr[p].cnt += tr[q].cnt;
+		tr[p].v = L;
+		return p;
+	}	
+	int mid = L + R >> 1;
+	tr[p].l = merge(tr[p].l, tr[q].l, L, mid);
+	tr[p].r = merge(tr[p].r, tr[q].r, mid + 1, R);
+	pushup(p);
+	return p;
+}

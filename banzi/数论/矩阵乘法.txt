@@ -1,0 +1,107 @@
+void mul(int c[], int a[], int b[][N]){
+    int temp[N] = {0};
+    for(int i = 0; i < N; i ++)
+        for(int j = 0; j < N; j ++)
+            temp[i] = (1ll * temp[i] + a[j] * b[j][i]) % MOD;
+    memcpy(c, temp, sizeof temp);
+}
+
+void mul(int c[][N], int a[][N], int b[][N]){
+    int temp[N][N] = {0};
+    for(int i = 0; i < N; i ++)
+        for(int j = 0; j < N; j ++)
+            for(int k = 0; k < N; k ++)
+                temp[i][j] = (1ll * temp[i][j] + c[i][k] * b[k][j]) % MOD;
+    memcpy(c, temp, sizeof temp);
+}
+
+
+struct Matrix {
+	static const int MAXSIZE = 5;
+	int n, m;  // 行数、列数
+	T a[MAXSIZE][MAXSIZE];  // 下标从1开始
+
+	Matrix() :n(0), m(0) { memset(a, 0, so(a)); }
+	Matrix(int _n, int _m) :n(_n), m(_m) { memset(a, 0, so(a)); }
+	
+	void init_identity() {  // 初始化为单位矩阵
+		assert(n == m);
+
+		memset(a, 0, so(a));
+		for (int i = 1; i <= n; i++) a[i][i] = 1;
+	}
+
+	Matrix<T> operator+(const Matrix<T>& B)const {
+		assert(n == B.n), assert(m == B.m);
+
+		Matrix<T> res(n, n);
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++)
+				res.a[i][j] = ((ll)a[i][j] + B.a[i][j]) % MOD;
+		}
+		return res;
+	}
+
+	Matrix<T> operator-(const Matrix<T>& B)const {
+		assert(n == B.n), assert(m == B.m);
+
+		Matrix<T> res(n, n);
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++)
+				res.a[i][j] = ((a[i][j] - B.a[i][j]) % MOD + MOD) % MOD;
+		}
+		return res;
+	}
+
+	Matrix<T> operator*(const Matrix<T>& B)const {
+		assert(m == B.n);
+
+		Matrix<T> res(n, B.m);
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= B.m; j++) {
+				for (int k = 1; k <= m; k++)
+					res.a[i][j] = ((ll)res.a[i][j] + (ll)a[i][k] * B.a[k][j]) % MOD;
+			}
+		}
+		return res;
+	}
+
+	Matrix<T> operator^(int k)const {  // 快速幂
+		assert(n == m);
+
+		Matrix<T> res(n, n);
+		res.init_identity();  // 单位矩阵
+		Matrix<T> tmpa(n, n);  // 存放矩阵a[][]的乘方
+		memcpy(tmpa.a, a, so(a));
+
+		while (k) {
+			if (k & 1) res = res * tmpa;
+			k >>= 1;
+			tmpa = tmpa * tmpa;
+		}
+		return res;
+	}
+
+	Matrix<T>& operator=(const Matrix<T>& B) {
+		memset(a, 0, so(a));
+		n = B.n, m = B.m;
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= m; j++) a[i][j] = B.a[i][j];
+		return *this;
+	}
+
+	bool operator==(const Matrix<T>& B)const {
+		if (n != B.n || m != B.m) return false;
+
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++)
+				if (a[i][j] != B.a[i][j]) return false;
+		}
+		return true;
+	}
+
+	void print() {
+		for (int i = 1; i <= n; i++)
+			for (int j = 1; j <= m; j++) cout << a[i][j] << " \n"[j == m];
+	}
+};

@@ -1,0 +1,107 @@
+struct KMP{
+    int nxt[maxn];int len;
+    char t[maxn];
+    void clear(){
+        len = nxt[0] = nxt[1] =0;
+    }
+    /* 1-bas */
+    /* 注意在ss结尾添加‘\0’ */
+    void init(char* ss){
+        len = strlen(ss+1);
+        memcpy(t, ss, (len + 2) * sizeof(char));
+        for (int i = 2; i <= len; i ++){
+            nxt[i] = nxt[i-1];
+            while (nxt[i] && ss[i] != ss[nxt[i] + 1]) nxt[i] = nxt[nxt[i]];
+            nxt[i] += (ss[i] == ss[nxt[i] + 1]);
+        }
+    }
+    /* 求所有在ss串中的start_pos. 如果first_only设置为true，则只返回第一个位置*/
+    std::vector<int> match(char *ss, bool first_only = false){
+        int len_s = strlen(ss+1);
+        std::vector<int> start_pos(0);
+        for (int i = 1, j = 1; i <= len_s;){
+            while (j !=1 && ss[i] != t[j]) j = nxt[j - 1] + 1;
+            if (ss[i] == t[j]) j ++,i ++;
+            else i ++;
+            if (j == len + 1){
+                start_pos.push_back(i - j + 1);
+                if (first_only)return start_pos;
+                j = nxt[len] + 1;
+            }
+        }
+        return start_pos;
+    }
+    void debug(){
+        for (int i = 0; i <= len; i ++){
+            printf("[debug] nxt[%d]=%d\n", i, nxt[i]);
+        }
+    }
+    /* 循环周期 形如 acaca 中 ac 是一个合法周期 */
+    std::vector<int> periodic(){
+        std::vector<int> ret;
+        int now = len;
+        while (now){
+            now = nxt[now];
+            ret.push_back(len - now);
+        }
+        return ret;
+    }
+    /* 循环节 形如 acac 中ac、acac是循环节，aca不是*/
+    std::vector<int> periodic_loop(){
+        std::vector<int>ret ;
+        for (int x : periodic()){
+            if (len % x == 0) ret.push_back(x);
+        }
+        return ret;
+    }
+    int min_periodic_loop(){
+        return periodic_loop()[0];
+    }
+}kmp;
+
+int h[N], e[N], ne[N], idx, root, depth[N], fa[N][21], bw = 20, q[N];
+
+void add(int a, int b){
+	ne[idx] = h[a], e[idx] = b, h[a] = idx ++;
+}
+char str[N];
+
+void bfs(){//初始化
+    memset(depth, 0x3f, sizeof depth);
+    int hh = 0, tt = 0;
+    q[0] = root;//根节点入队
+    depth[root] = 1, depth[0] = 0;
+    while(hh <= tt){
+        int f = q[hh ++];//取出队头
+        for(int i = h[f]; ~i; i = ne[i]){//遍历邻边
+            int j = e[i];
+            if(depth[j] > depth[f] + 1){
+                depth[j] = depth[f] + 1;
+                q[++ tt] = j;
+                fa[j][0] = f;
+                for(int k = 1; k <= bw; k ++)
+                    fa[j][k] = fa[fa[j][k-1]][k-1];
+            }
+
+        }
+    }
+}
+
+int LCA(int a, int b){
+    if(depth[a] < depth[b]) std::swap(a, b);//保持a的是深层
+    //让a走到和b一样深的地方去
+    for(int i = bw; i >= 0; i --)
+        if(depth[fa[a][i]] >= depth[b])
+            a = fa[a][i]; 
+    if(a == b) return a;//说明b是a和b的公共祖先(不一定是最近公共祖先)
+    //让a和b一起往上跳到最近公共祖先的先前一个点
+    for(int i = bw; i >= 0; i -- ){
+        if(fa[a][i] != fa[b][i]){
+            a = fa[a][i];
+            b = fa[b][i];
+        }
+    }
+
+    return fa[a][0];
+}
+//本身不能是boder

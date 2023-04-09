@@ -1,0 +1,139 @@
+struct Suffix_Automaton{
+	const int thech = 'a';
+    int nxt[N << 1][26],fa[N << 1],l[N << 1];
+    int c[N << 1], q[N << 1];
+    int ans[N];
+    int h[N << 1], ne[N << 1], e[N << 1], idx;
+    int endpos[N << 1] ; // 存字符串每个前缀的状态
+	const int sigma = 20;
+    int st[N << 1][21];
+    int minRight[N << 1]; // 存 SAM 上每个状态的最小 right 
+    int f[N << 1];// 公共子串计数的辅助数组
+    int cnt[N << 1];//存right集合大小
+    int last, tot, slen;
+
+    inline void add(int a, int b){
+        ne[idx] = h[a], e[idx] = b, h[a] = idx ++;
+    }
+
+    inline void clear(){
+        memset(nxt[1], 0, sizeof nxt[1]);
+    }
+    inline void init(std::string &s){
+    	last = tot = 1;
+        idx = 0;
+        fa[1] = l[1] = 0;
+        memset(h, -1, sizeof h);
+        
+        slen = s.length();
+        for(int i = 0; i < slen; ++ i)	extend(s[i] - thech, i + 1);
+    }
+
+    inline void extend(int c, int nth){
+        int p = last;
+        int np = ++ tot;
+        memset(nxt[tot], 0, sizeof nxt[tot]);
+        l[np] = l[p] + 1; last = np;
+        cnt[np] = 1;
+        endpos[nth] = np;
+        minRight[np] = nth;
+        while (p && !nxt[p][c]) nxt[p][c] = np, p = fa[p];
+        if (!p) fa[np] = 1;
+        else{
+            int q = nxt[p][c];
+            if (l[q] == l[p] + 1)	fa[np] = q;
+            else{
+                int nq = ++ tot;
+                l[nq] = l[p] + 1;
+                minRight[nq] = minRight[q];
+                memcpy(nxt[nq], nxt[q], sizeof nxt[q]);
+                fa[nq] = fa[q];
+				fa[np] = fa[q] = nq;
+                while (nxt[p][c] == q) nxt[p][c] = nq, p = fa[p];
+            }
+        }
+    }
+
+	//基数排序
+    inline void topsort(int n){
+        for(int i = 1; i <= tot; i ++)  c[l[i]]++;
+    	for(int i = 1; i <= n; i ++)  c[i] += c[i - 1];
+    	for(int i = tot; i; i--)    q[c[l[i]]--] = i;
+//         for(int i = tot, u = q[i]; i; u = q[-- i])
+//         	cnt[fa[u]] += cnt[u], ans[l[u]] = max(ans[l[u]], cnt[u]);
+    }
+
+    void build() {
+        // 预处理倍增表
+        for (int i = 1; i <= tot; i++) st[i][0] = fa[i];
+        for (int j = 1; j <= sigma; j++)
+            for (int i = 1; i <= tot; i++)
+                st[i][j] = st[st[i][j - 1]][j - 1];
+ 
+        topsort(slen);
+        // 如果需要维护 right 集合：从子节点开始，合并 endpos 集合
+        for (int i = tot; i > 1; i--) {
+            int u = q[i];
+            // if (fa[u])
+            //     endpos[st[u].link] = merge(endpos[st[u].link], endpos[u]);
+            if(fa[u]){
+                cnt[fa[u]] += cnt[u];
+            }
+        }
+    }
+    
+	// dfs 求 cnt 和 st
+    inline void dfs(int u, int father, bool flag) {
+        st[u][0] = father;
+        for(int j = 1; j <= 20;j ++) st[u][j] = st[st[u][j - 1]][j - 1];
+        for(int i = h[u]; ~i; i = ne[i]) {
+			int j = e[i];
+            dfs(j, u, flag);
+            cnt[u] += cnt[j];
+            if(flag) f[u] = max(f[u], f[j]);//公共子串计数辅助数组
+        }
+    }
+
+    inline void add_path(bool flag = false){
+        for(int i = 2; i <= tot; i ++)    add(fa[i], i);
+        dfs(1, -1, flag) ;
+    }
+    
+    // 求字符串的本子不同子串数
+    long long getEssDifSubstrings() {
+        long long ans = 0 ;
+        for(int i = 2;i <= tot;++ i) ans += l[i] - l[fa[i]] ;
+        return ans ;
+    }
+    // 得到子串 [l,r] 在 SAM 上的状态节点
+    int getSubstringLR(int L, int R) {
+        int p = endpos[R];
+        for(int i = 20; i >= 0; i --)
+        	if(l[st[p][i]] >= R - L + 1)
+            	p = st[p][i];
+            
+        return p;
+    }
+    
+    // 求 t 与 s 的本质不同公共子串数
+    long long getSum_Common_Substring(std::string t) {
+        int lengt = t.length();
+        for(int i = 0, now = 1, res = 0;i < lengt; i ++)
+        {
+            int c = t[i] - thech;
+            if(nxt[now][c]) now = nxt[now][c], res ++;
+            else
+            {
+                while(now > 1 && !nxt[now][c]) now = fa[now] ;
+                if(nxt[now][c]) res = l[now] + 1, now = nxt[now][c];
+                else res = 0 ;
+            }
+            f[now] = max(f[now], res) ;
+        }
+        add_path(1) ;
+        long long ans = 0 ;
+        for(int i = 2; i <= tot;++ i) ans += max(0, min(f[i], l[i]) - l[fa[i]]);
+        return ans ;
+
+    }
+}sam;

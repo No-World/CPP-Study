@@ -1,0 +1,29 @@
+struct Fenwick{
+	int maxm, cnt = 0;
+	std::vector<int> tr;
+	Fenwick(int n): tr(n + 1, 0) {maxm = n;}
+	inline int lowbit(int x) {return x & -x;}
+	
+	inline void add(int x, int v){
+       	for(int i = x; i <= maxm; i += lowbit(i))	tr[i] += v;
+    		cnt += v;
+	}
+	
+	inline int query(int l, int r){
+		return query(r) - query(l - 1);
+	}
+	
+	inline int find_kmin(int k) {
+        int ans = 0, cnt = 0;
+        for (int i = 20; i >= 0; i--) {
+            ans += (1 << i);
+            if (ans >= maxm || cnt + tr[ans] >= k) ans -= (1 << i);
+            else cnt += tr[ans];
+        }
+        return ans + 1;
+    }
+
+    inline int find_kmax(int k) {
+        return find_kmin(cnt - k + 1);
+    }
+};

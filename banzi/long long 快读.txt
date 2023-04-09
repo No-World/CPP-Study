@@ -1,0 +1,29 @@
+namespace Fio {
+    inline string sread() {
+        string s = " ";
+        char e = getchar();
+        while (!isdigit(e) && !isalpha(e) && e != '*') e = getchar();
+        while (isdigit(e) || isalpha(e) || e == '*') s += e, e = getchar();
+        return s;
+    }
+    inline ll read() {
+        ll x = 0, y = 1;
+        char c = getchar();
+        while (!isdigit(c)) {
+            if (c == '-') y = -1;
+            c = getchar();
+        }
+        while (isdigit(c)) {
+            x = (x << 3) + (x << 1) + (c ^ 48);
+            c = getchar();
+        }
+        return x *= y;
+    }
+    inline void write(ll x) {
+        if (x < 0) x = -x, putchar('-');
+        ll sta[35], top = 0;
+        do sta[top++] = x % 10, x /= 10;
+        while (x);
+        while (top) putchar(sta[--top] + '0');
+    }
+} using namespace Fio;

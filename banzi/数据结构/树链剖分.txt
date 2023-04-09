@@ -1,0 +1,84 @@
+int w[N], h[N], e[M], ne[M], idx;
+int id[N], nw[N], cnt;
+int dep[N], sz[N], top[N], fa[N], son[N], ans[N];
+
+std::map<int, int> mp[N << 2];
+std::vector<int> nums;
+struct Node{
+	int l, r;
+	int cnt;
+}tr[N << 2];
+int mx[N << 2], rid[N];
+
+inline void build(int u, int l, int r){
+	tr[u] = {l, r};
+	if(l == r)	return ;
+	int mid = l + r >> 1;
+	build(u << 1, l, mid);
+	build(u << 1 | 1, mid + 1, r);
+}
+
+inline void init(){
+	memset(h, -1, sizeof h);
+}
+
+inline void add(int a, int b){
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
+}
+//统计子树大小 并且 找出重儿子
+inline void dfs1(int u, int father, int depth){
+    dep[u] = depth, fa[u] = father, sz[u] = 1;
+    for (int i = h[u]; ~i; i = ne[i]){
+        int j = e[i];
+        if (j == father) continue;
+        dfs1(j, u, depth + 1);
+        sz[u] += sz[j];
+        if (sz[son[u]] < sz[j]) son[u] = j;
+    }
+}
+
+//dfs序 nw标记dfs为cnt的时候对应的树上点的权值 top标记父亲是谁
+inline void dfs2(int u, int t){
+    id[u] = ++ cnt, nw[cnt] = w[u], top[u] = t;
+    if (!son[u]) return;
+    dfs2(son[u], t);
+    for (int i = h[u]; ~i; i = ne[i]){
+        int j = e[i];
+        if (j == fa[u] || j == son[u]) continue;
+        dfs2(j, j);
+    }
+}
+
+void update(int u, int l, int r, int k){
+    if(tr[u].l >= l && tr[u].r <= r){
+    	int o = ++ mp[u][k];
+    	//if(tr[u].l == tr[u].r){
+    		if(o > mx[u]){
+	    		mx[u] = o;
+	    		rid[u] = k;	
+	    	}else if(o == mx[u])	rid[u] == std::min(rid[u], k);
+    	//}
+    	
+    	return ;
+    }
+    int mid = tr[u].l + tr[u].r >> 1;
+    if(l <= mid)	update(u << 1, l, r, k);
+    if(r > mid)	update(u << 1 | 1, l, r, k);
+}
+
+//传进来想要爬的两个点
+inline void update_path(int u, int v, int k){
+    while (top[u] != top[v])
+    {
+        if (dep[top[u]] < dep[top[v]]) std::swap(u, v);
+        update(1, id[top[u]], id[u], k);
+        u = fa[top[u]];
+    }
+    if (dep[u] < dep[v]) std::swap(u, v);
+    update(1, id[v], id[u], k);
+}
+
+inline void Init(){
+	dfs1(1, -1, 1);
+    dfs2(1, 1);
+}

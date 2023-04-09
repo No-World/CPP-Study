@@ -1,0 +1,54 @@
+const int N = 2e5 + 10, M = 6e5 + 10;
+struct Persistent_Tire{
+	int ch[M * 31][2], ver[M  * 31], root[M * 31], idx, sz[M * 31];//25是固定的空间大小, 20是二进制最多多少位数 还是自己算吧
+	int sigma;
+	
+	inline void Init(){
+		ver[0] = -1;//边界
+		idx = 0;
+		sigma = 30;//位数
+		ins(root[0], 0, 0, 0);//边界
+	}
+	
+	//当前版本的root，上个版本的root，值， 当前版本的编号
+    inline void ins(int &xx, int o, int v, int pos) {
+        sz[xx = ++ idx] = sz[o] + 1;
+		ver[idx] = pos;
+        for(int d = sigma, c, x = xx; d >= 0; d --){
+        	c = (v >> d) & 1;
+        	ch[x][c ^ 1] = ch[o][c ^ 1];
+        	sz[x = ch[x][c] = ++ idx] = sz[o = ch[o][c]] + 1;
+        	ver[idx] = pos;
+        }
+    }
+	
+	//求出L到后面所有版本的异或最大值
+	inline int query(int x, int L, int cur){//当前版本root[i] 左边界l查询值
+		int res = 0;
+		for(int i = sigma; i >= 0; i --){
+			int c = cur >> i & 1;
+			if(ver[ch[x][!c]] >= L){
+				x = ch[x][!c];
+				res += 1 << i;
+			}else	x = ch[x][c];
+		}
+		return res;
+	}
+
+	//查询区间k小
+	inline int queryk(int x, int y, int k){//右端点root[r] 左端点root[l - 1] 第k小 
+		int res = 0;
+		for(int i = sigma; ~i; i --){
+			int lsx = ch[x][0], rsx = ch[x][1], lsy = ch[y][0], rsy = ch[y][1];
+			int ss = sz[lsx] - sz[lsy];
+			if(k <= ss)	x = lsx, y = lsy;
+			else{
+				k -= ss;
+				x = rsx, y = rsy;
+				res += (1 << i);
+			}
+		}
+    	return res;
+	}
+	
+}HT;

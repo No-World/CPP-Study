@@ -1,0 +1,21 @@
+int ouler[M];
+int primes[M], cnt;
+bool vis[M];
+void get_ouler(int x){
+    ouler[1] = 1;
+    for(int i = 2;i <= n; i ++){
+        if(!vis[i]){
+            primes[cnt++] = i;
+            ouler[i] = i - 1;
+        }
+        for(int j = 0; primes[j] <= n / i; j ++){
+            int t = primes[j] * i;
+            vis[t] = true;
+            if(i % primes[j] == 0){
+                ouler[t] = ouler[i] * primes[j];
+                break;
+            }
+            ouler[t] = ouler[i] * (primes[j]- 1);
+        }
+    }
+}

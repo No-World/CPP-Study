@@ -1,0 +1,4 @@
+ll mult_mod(ll a, ll b, ll mod) {
+   ll c = a * b - (ll)((long double) a * b / mod + 0.5) * mod;
+   return c < 0 ? c + mod : c;
+}

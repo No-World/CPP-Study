@@ -1,0 +1,85 @@
+std::vector<double>	nums;
+
+struct Segment{
+	double x, y1, y2;
+	int k;
+}seg[N];
+
+struct Node{
+	int l, r;
+	double len;
+	int cnt;
+}tr[N << 2];
+
+inline void pushup(int u){
+	if(tr[u].cnt)	tr[u].len = nums[tr[u].r + 1] - nums[tr[u].l];
+	else if(tr[u].l != tr[u].r)	tr[u].len = tr[u << 1].len + tr[u << 1 | 1].len;
+	else tr[u].len = 0;
+}
+
+inline void build_tree(int u, int l, int r){
+	tr[u] = {l, r, 0, 0};
+	if(l == r)	return ;
+	int mid = l + r >> 1;
+	build_tree(u << 1, l, mid);
+	build_tree(u << 1 | 1, mid + 1, r);
+}
+
+inline void modify(int u, int l, int r, int k){
+	if(tr[u].l >= l && tr[u].r <= r){
+		tr[u].cnt += k;
+		pushup(u);
+		return ;
+	}
+	int mid = tr[u].l + tr[u].r >> 1;
+	if(l <= mid)	modify(u << 1, l, r, k);
+	if(r > mid)	modify(u << 1 | 1, l, r, k);
+	pushup(u);
+}
+
+bool cmp(Segment a, Segment b){
+	return a.x < b.x;
+}
+
+inline void solve(){
+	int T = 0;
+	while(std::cin >> n){
+		if(!n)	return ;
+		nums.clear();
+		T ++;
+		for(int i = 0, j = 0; i < n; i ++){
+			double x1, x2, y1, y2;
+			std::cin >> x1 >> y1 >> x2 >> y2;
+			if(y1 > y2)	std::swap(y1, y2);
+			seg[j ++] = {x1, y1, y2, 1};
+			seg[j ++] = {x2, y1, y2, -1};
+			nums.emplace_back(y1);
+			nums.emplace_back(y2);
+		}
+		std::sort(nums.begin(), nums.end());
+		std::sort(seg, seg + n * 2, cmp);
+		nums.erase(std::unique(nums.begin(), nums.end()), nums.end());
+		int sz = nums.size() - 2;
+		//线段树维护区间 区间数量等于-1
+		std::sort(seg, seg + 2 * n, cmp);
+		if(sz < 0){
+			std::cout << "Test case #" << T << '\n';
+			std::cout << "Total explored area: ";
+			std::cout << std::fixed << std::setprecision(2) << 0.00 << '\n' << '\n';
+			continue;
+		}
+		build_tree(1, 0, sz);
+		double res = 0;
+		for(int i = 0; i < 2 * n; i ++){
+			if(i)	res += tr[1].len * (seg[i].x - seg[i - 1].x);
+				//维护的是区间所以右端点需要将减一
+			int l = lower_bound(nums.begin(), nums.end(), seg[i].y1) - nums.begin();
+			int r = lower_bound(nums.begin(), nums.end(), seg[i].y2) - nums.begin() - 1;
+			if(r < l)	continue;
+			modify(1, l, r, seg[i].k);
+		}
+		std::cout << "Test case #" << T << '\n';
+		std::cout << "Total explored area: ";
+		std::cout << std::fixed << std::setprecision(2) << res << '\n' << '\n';
+	}
+}

@@ -1,0 +1,20 @@
+struct string_hash {
+    char s[N];
+    int n;
+    ll sum[N], val[N];
+    int get(char x) {
+        if (x <= '9' && x >= '0') return x - '0' + 1;
+        else if (x >= 'a' && x <= 'z') return x - 'a' + 11;
+        else return x - 'A' + 37; 
+    }
+    void get_hash() {
+        val[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            sum[i] = sum[i - 1] * base + get(s[i]);
+            val[i] = val[i - 1] * base;
+        } 
+    }
+    ll query(int l, int r) {
+        return sum[r] - sum[l - 1] * val[r - l + 1];
+    }
+} t;

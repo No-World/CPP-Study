@@ -1,0 +1,15 @@
+int exgcd(int a, int b, int &x, int &y){// x是逆元 b是模数, 返回值是最大公约数
+   if (!b){
+       x = 1, y = 0;
+       return a;
+   }
+   int d = exgcd(b, a % b, y, x);
+   y -= a / b * x;
+   return d;
+}
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}

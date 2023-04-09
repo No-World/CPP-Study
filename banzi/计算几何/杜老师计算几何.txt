@@ -1,0 +1,83 @@
+int sign(db x){//判断符号
+    if (fabs(x) < eps) return 0;
+    if (x < 0) return -1;
+    return 1;
+}
+
+int cmp(double x, double y){
+    if (fabs(x - y) < eps) return 0;
+    if (x < y) return -1;
+    return 1;
+}
+
+struct Point{
+    db x, y;
+    Point() {}
+    Point(db _x, db _y) : x(_x), y(_y) {}
+    Point operator +(Point p){return {x + p.x, y + p.y};}
+    Point operator -(Point p){return {x - p.x, y - p.y};}
+    Point operator *(db d) { return {x * d, y * d}; }
+    Point operator /(db d) { return {x / d, y / d}; }
+    bool operator <(Point p) const
+    {
+        int c = cmp(x, p.x);
+        if (c)
+            return c == -1;
+        return cmp(y, p.y) == - 1;
+    }
+    bool operator ==(Point o) const
+    {
+        return cmp(x, o.x) == 0 && cmp(y, o.y) == 0;
+    }
+    db abs() { return sqrt(abs2()); }
+    db abs2() { return x * x + y * y; }
+    void read() { cin >> x >> y; }
+    void write() { cout << "(" << x << "," << y << ")" << endl; }
+    Point rot90() { return Point(-y, x); }
+    Point unit() { return *this / abs(); }
+    db distTo(Point p) { return (*this - p).abs(); }
+    int quad() const { return sign(y) == 1 || (sign(y) == 0 && sign(x) >= 0); } //判断在上半区还是下半区
+    db alpha() const { return atan2(y, x); }
+};
+
+Point rot(Point p, db theta) { return {p.x * cos(theta) - p.y * sin(theta), p.x * sin(theta) + p.y * cos(theta)}; }//点的旋转(逆时针)
+
+double cross(Point a, Point b){//计算叉积
+    return a.x * b.y - b.x * a.y;
+}
+
+double area(Point a, Point b, Point c){//计算以a为出发点，与b,c两点构成的面积,如果c在b的逆时针方向则为面积正
+     return cross({b.x - a.x, b.y - a.y}, {c.x - a.x, c.y - a.y});
+}
+
+bool intersect(db l1, db r1, db l2, db r2){
+    if (l1 > r1)
+        swap(l1, r1);
+    if (l2 > r2)
+        swap(l2, r2);
+    return !(cmp(r1, l2) == -1 || cmp(r2, l1) == -1);
+}
+
+bool segment_intersection(Point a1, Point a2, Point b1, Point b2){//去掉等于号和intersect函数则是严格相交(落在线段上不算)
+    db c1 = cross(a2 - a1, b1 - a1), c2 = cross(a2 - a1, b2 - a1);
+    db c3 = cross(b2 - b1, a2 - b1), c4 = cross(b2 - b1, a1 - b1);
+    return intersect(a1.x, a2.x, b1.x, b2.x) && intersect(a1.y, a2.y, b1.y, b2.y) && sign(c1) * sign(c2) <= 0 && sign(c3) * sign(c4) <= 0;
+}
+
+vector<Point> convexHull(vector<Point> ps)//凸包
+{
+    int n = ps.size();
+    if (n <= 1)
+        return ps;
+    sort(ps.begin(), ps.end());
+    vector<Point> qs(n * 2);
+    int k = 0;
+    for (int i = 0; i < n; qs[k++] = ps[i++])
+        while (k > 1 && area(qs[k - 2], qs[k - 1], ps[i]) <= 0)
+            --k;
+    for (int i = n - 2, t = k; i >= 0; qs[k++] = ps[i--])
+        while (k > t && area(qs[k - 2], qs[k - 1], ps[i]) <= 0)
+            --k;
+    qs.resize(k - 1);
+    return qs;
+}

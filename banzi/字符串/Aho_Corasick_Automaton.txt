@@ -1,0 +1,118 @@
+struct Aho_Corasick_Automaton{
+	int cnt[N], tr[N][26], idx, q[N], nxt[N], mx[N];
+	int pre[N];//跳到上一个有终止节点的位置
+	int son[N];//
+	int id[N], reid[N];//每个字符串原串位置的标记
+	int sz[N], h[N], e[N], ne[N], dfn[N], tdl, idx1;//ac自动机fail树上建dfs序数组
+	int vis[N * 2], used[N * 2];//找环
+	int sigma = 26;
+	int simple = 'a';
+
+	inline void add(int a, int b){
+		ne[idx1] = h[a], e[idx1] = b, h[a] = idx1 ++;
+	}
+
+	//多组测试清空操作
+	inline void init(){
+        for(int i = 0; i <= idx; i ++ ){
+        	memset(tr[i], 0, sizeof tr[i]);
+        	nxt[i] = cnt[i] = ne[i] = 0, h[i] = -1;
+			vis[i] = used[i] = 0;
+        } 
+        idx = tdl = idx1 = 0;
+    }
+
+	inline bool findcycle(int u){//AC自动机找从0号是否可以有环(不能经过字符串被标记的地方)
+		if(used[u] == 1)	return true;
+		if(used[u] == -1)	return false;
+		vis[u] = used[u] = true;
+		for(int i = 0; i < 2; i ++)
+			if(!son[tr[u][i]])	if(findcycle(tr[u][i]))	return true;
+		used[u] = -1;
+		return false;
+	}
+
+	inline void dfs(int u){//dfs序
+		sz[u] = 1, dfn[u] = ++ tdl;
+		for(int i = h[u]; ~i; i = ne[i]){
+			int j = e[i];
+			dfs(j);
+			sz[u] += sz[j];
+		}
+	}
+	
+	inline int insert(std::string &s){//插入字符 和插入的是第几个字符
+		int p = 0;
+		for(char &ch : s){
+			int u = ch - simple;
+			if(!tr[p][u]){
+				tr[p][u] = ++ idx;
+			}
+			p = tr[p][u];
+		}
+		cnt[p] ++;
+		return p;
+	}
+
+	inline int insert(std::string &s, int x){//插入字符 和插入的是第几个字符
+		int p = 0;
+		for(char &ch : s){
+			int u = ch - simple;
+			if(!tr[p][u]){
+				tr[p][u] = ++ idx;
+			}
+			p = tr[p][u];
+		}
+		id[p] = x;//标记第x个字符的结尾
+		reid[x] = p;
+		cnt[p] ++;
+		son[p] = 1;
+		mx[p] = std::max(mx[p], (int)s.length());
+		return p;
+	}
+	
+	inline void build(){//建立ac自动机
+		int p = 0;
+		int hh = 0,tt = -1;
+		for(int i = 0; i < sigma; i ++)
+			if(tr[p][i])	q[++ tt] = tr[p][i];
+		while(hh <= tt){
+			int tq = q[hh ++];
+			for(int i = 0; i < 26; i ++){
+				int j = tr[tq][i];
+				if(!tr[tq][i]){
+					tr[tq][i] = tr[nxt[tq]][i];
+				}
+				else{
+					q[++ tt] = tr[tq][i];
+					nxt[j] = tr[nxt[tq]][i];
+					if(cnt[nxt[j]])  pre[j] = nxt[j];
+                   	else pre[j] = pre[nxt[j]];
+					//son[j] |= son[nxt[j]];//标记能到达终止节点路径上的所有点
+				}
+			}
+		}
+	}
+
+	//ac自动机fail树上建dfs序的建边
+	inline void failtree(){
+		memset(h, -1, sizeof h);
+		for(int i = 1; i <= idx; i ++)	add(nxt[i], i);
+		dfs(0);
+	}
+
+	inline int query(std::string &s){
+		int res = 0, j = 0;
+		for(char &ch : s){
+			int u = ch - 'a';
+			j = tr[j][u];
+			int p = u;
+			while(p){
+				res += cnt[p];
+				p = nxt[p];
+			}
+		}
+		return res;
+	}	
+
+}acam;
