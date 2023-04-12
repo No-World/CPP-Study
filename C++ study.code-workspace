@@ -3,5 +3,11 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "files.associations": {
+            "cstddef": "cpp",
+            "iostream": "cpp"
+        }
+    }
 }
