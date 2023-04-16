@@ -1,3 +1,11 @@
+// Problem: 大欢喜帝
+// Contest: NowCoder
+// URL: https://ac.nowcoder.com/acm/contest/55416/A
+// Memory Limit: 524288 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>

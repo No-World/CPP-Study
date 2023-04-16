@@ -1,2 +1,2 @@
 @echo off
-test.exe < data.txt > my.txt
+baoli.exe < data.txt > baoli.txt

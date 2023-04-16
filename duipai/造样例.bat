@@ -1,2 +1,2 @@
 @echo off
-gen.exe %random% > data.txt
+data.exe %random% > data.txt

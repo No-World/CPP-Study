@@ -19,7 +19,7 @@ const int inf = 0x3f3f3f3f, N = 1010;
 inline void Solution()
 {
     int a, b, x, y, ans = 0;
-    cin >> a >> b >> x >> y;
+    scanf("%d%d%d%d", &a, &b, &x, &y);
 
     if (a == x)
     {
@@ -48,94 +48,154 @@ inline void Solution()
     if (a == 1)
     {
         if (x < 4)
+        {
             ans += 1;
+        }
         else if (x == 4)
+        {
             ans += 2;
+        }
         else if (x < 7)
+        {
             ans += 3;
+        }
         else
+        {
             ans += 4;
+        }
     }
     else if (a == 2)
     {
         if (x == 4)
+        {
             ans += 1;
+        }
         else if (x == 3 || x < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 3;
+        }
     }
     else if (a == 3)
     {
         if (x == 4)
+        {
             ans += 1;
+        }
         else if (x < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 3;
+        }
     }
     else if (a == 4)
     {
         if (x < 7)
+        {
             ans += 1;
+        }
         else
+        {
             ans += 2;
+        }
     }
     else if (a == 5)
     {
         if (x < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 1;
+        }
     }
     else if (a == 6)
+    {
         ans += 1;
+    }
     if (b == 1)
     {
         if (y < 4)
+        {
             ans += 1;
+        }
         else if (y == 4)
+        {
             ans += 2;
+        }
         else if (y < 7)
+        {
             ans += 3;
+        }
         else
+        {
             ans += 4;
+        }
     }
     else if (b == 2)
     {
         if (y == 4)
+        {
             ans += 1;
+        }
         else if (y == 3 || y < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 3;
+        }
     }
     else if (b == 3)
     {
         if (y == 4)
+        {
             ans += 1;
+        }
         else if (y < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 3;
+        }
     }
     else if (b == 4)
     {
         if (y < 7)
+        {
             ans += 1;
+        }
         else
+        {
             ans += 2;
+        }
     }
     else if (b == 5)
     {
         if (y < 7)
+        {
             ans += 2;
+        }
         else
+        {
             ans += 1;
+        }
     }
     else if (b == 6)
+    {
         ans += 1;
-    cout << ans << endl;
+    }
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
