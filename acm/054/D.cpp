@@ -14,17 +14,36 @@
 // typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10;
-// const ll INF = __LONG_LONG_MAX__;
 
 inline void Solution()
 {
+    int n, m, ans = 0, t = 0;
+    scanf("%d%d", &n, &m);
+    while (m > n)
+    {
+        n <<= 1;
+        t++;
+        ans++;
+    }
+    n = n - m;
+    while (n && t > 0)
+    {
+        if (n % 2)
+        {
+            ans++;
+        }
+        n /= 2;
+        t--;
+    }
+    ans += n;
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
-    int T = 1;
-    // scanf("%d", &T);
-    while (T--)
+    int t = 1;
+    scanf("%d", &t);
+    while (t--)
     {
         Solution();
     }

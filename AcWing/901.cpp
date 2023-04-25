@@ -1,3 +1,11 @@
+// Problem: 滑雪
+// Contest: AcWing
+// URL: https://www.acwing.com/problem/content/903/
+// Memory Limit: 64 MB
+// Time Limit: 1000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
