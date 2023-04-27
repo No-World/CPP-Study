@@ -1,57 +1,71 @@
-#include <iostream>
-#include <stdio.h>
-#include <algorithm>
+// #include <bits/stdc++.h>
+#include <cstdio>
 #include <cstring>
-#include <cmath>
-#include <vector>
+#include <iostream>
+// #include <algorithm>
+// #include <cmath>
+// #include <queue>
 #include <map>
-#include <stack>
-#include <queue>
-#include <set>
-#include <unordered_map>
-#include <cstdlib>
+#include <vector>
+// #include <stack>
+// #include <set>
+// #include <unordered_map>
+// #include <cstdlib>
+// typedef long long ll;
 using namespace std;
-using i64 = long long;
-typedef long long ll;
-ll n, k, m;
-const int N = 2e6 + 10;
-void solve()
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+// const ll INF = __LONG_LONG_MAX__;
+
+inline void Solution()
 {
-    cin >> n;
-    if (n == 1)
+    int m, n;
+    cin >> m >> n;
+    string line;
+    getline(cin, line);
+    string lines[m];
+    for (int i = 0; i < m; i++)
     {
-        cout << 1 << '\n';
-        return;
+        getline(cin, lines[i]);
     }
-    else if (n % 2 != 0)
+
+    map<string, string> name;
+    string value, key;
+    for (int i = 1; i <= n; i++)
     {
-        cout << -1 << '\n';
+        cin >> key;
+        getline(cin, value);
+        int l = value.length();
+        string s;
+        name[key] = value.substr(2, value.length() - 3);
     }
-    else
+    for (int i = 0; i < m; i++)
     {
-        for (int i = 1; i <= n; i++)
+        int prev = 0, next = 0;
+        for (;;)
         {
-            if (i % 2 != 0)
+            if ((prev = lines[i].find("{{ ", prev)) == (int)string::npos)
             {
-                cout << n - i + 1 << " ";
+                break;
             }
-            else
+            if ((next = lines[i].find(" }}", prev)) == (int)string::npos)
             {
-                cout << i - 1 << " ";
+                break;
             }
+            key = lines[i].substr(prev + 3, next - prev - 3);
+            lines[i].replace(prev, next - prev + 3, name.count(key) ? name[key] : "");
+            prev += name.count(key) ? name[key].length() : 0;
         }
-        cout << '\n';
+        cout << lines[i] << endl;
     }
-    return;
 }
-int main()
+
+int main(int argc, char const *argv[])
 {
-    int T;
-    T = 1;
-    cin >> T;
+    int T = 1;
+    // scanf("%d", &T);
     while (T--)
     {
-        solve();
+        Solution();
     }
     return 0;
 }
