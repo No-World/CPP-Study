@@ -1,52 +1,54 @@
-#include <iostream>
-#include <stack>
-#include <string>
+// Problem: M. Different Billing
+// Contest: Codeforces - 2023 Hubei Provincial Collegiate Programming Contest
+// URL: https://codeforces.com/gym/104337/problem/M
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
+// #include <bits/stdc++.h>
+#include <cstdio>
+// #include <iostream>
+// #include <cstring>
+// #include <algorithm>
+// #include <cmath>
+// #include <queue>
+// #include <map>
+// #include <vector>
+// #include <stack>
+// #include <set>
+// #include <unordered_map>
+// #include <cstdlib>
+// typedef long long ll;
 using namespace std;
-long long cd(long long x)
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+// const ll INF = __LONG_LONG_MAX__;
+
+inline void Solution()
 {
-    return x * (x + 1) / 2;
-}
-int main()
-{
-    int n, flag = 0;
-    string s;
-    cin >> n >> s;
-    s = ' ' + s;
-    long long ans = 0, len = 0;
-    for (int i = 1; i <= n; i++)
+    int x, y;
+    scanf("%d%d", &x, &y);
+    int mod1 = y / 2500;
+    y %= 2500;
+    int mod2 = y / 1000;
+    y %= 1000;
+    if (mod1 + mod2 > x || y != 0)
     {
-        if (flag == 0)
-        {
-            len++;
-            if (s[i] == '1')
-                flag = 1;
-            if (s[i] == '4')
-                flag = 4;
-        }
-        else if (flag == 1)
-        {
-            if (s[i] == '4')
-            {
-                ans += cd(len);
-                len = 1;
-                flag = 4;
-            }
-            else
-                len++;
-        }
-        else if (flag == 4)
-        {
-            if (s[i] == '1')
-            {
-                ans += cd(len);
-                len = 1;
-                flag = 1;
-            }
-            else
-                len++;
-        }
+        printf("-1\n");
     }
-    ans += cd(len);
-    cout << ans;
+    else
+    {
+        printf("%d %d %d\n", x - mod1 - mod2, mod2, mod1);
+    }
+}
+
+int main(int argc, char const *argv[])
+{
+    int T = 1;
+    // scanf("%d", &T);
+    while (T--)
+    {
+        Solution();
+    }
     return 0;
 }
