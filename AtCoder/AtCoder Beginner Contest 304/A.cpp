@@ -43,6 +43,10 @@ inline void Solution()
     {
         printf("%s %d\n", s[i], a[i]);
     }
+    for (int i = 0; i < num; i++)
+    {
+        printf("%s %d\n", s[i], a[i]);
+    }
 }
 
 int main(int argc, char const *argv[])

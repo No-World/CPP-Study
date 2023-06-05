@@ -12,7 +12,7 @@
 // #include <cstring>
 #include <algorithm>
 // #include <cmath>
-// #include <queue>
+#include <queue>
 // #include <map>
 // #include <vector>
 // #include <stack>
@@ -23,35 +23,31 @@
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct lamb
-{
-    int a, b, c;
-} a[N];
-
-inline bool cmp(lamb x, lamb y)
-{
-    if (x.b == y.b)
-    {
-        return x.c > y.c;
-    }
-
-    return x.b < y.b;
-}
-
+// 解释Solution函数代码
 inline void Solution()
 {
-    int n;
+    int n, x, y;
     scanf("%d", &n);
-    int b[n];
-    for (int i = 0; i < n; i++)
+    // 优先队列，大顶堆，每个位置存储该位置的灯的亮度，每次取出最大的亮度
+    priority_queue<int> q[n + 1];
+    for (int i = 1; i <= n; i++)
     {
-        a[i].a = i + 1;
-        scanf("%d%d", &a[i].b, &a[i].c);
-        b[a[i].b]++;
+        scanf("%d%d", &x, &y);
+        q[x].push(y);
     }
-    sort(a, a + n, cmp);
-    printf("%d %d %d\n", a[0].a, a[0].b, a[0].c);
+    long long res = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        int j = 0;
+        // 每次取出最大的亮度
+        while (q[i].size() && j < i)
+        {
+            res += q[i].top();
+            q[i].pop();
+            j++;
+        }
+    }
+    printf("%lld\n", res);
 }
 
 int main(int argc, char const *argv[])
