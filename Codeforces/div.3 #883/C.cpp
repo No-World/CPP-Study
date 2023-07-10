@@ -1,8 +1,8 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
-// Time Limit: 2000 ms
+// Problem: C. Rudolf and the Another Competition
+// Contest: Codeforces - Codeforces Round 883 (Div. 3)
+// URL: https://codeforces.com/contest/1846/problem/C
+// Memory Limit: 256 MB
+// Time Limit: 1000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -41,7 +41,7 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
+#include <cstring>
 #include <algorithm>
 // #include <cmath>
 // #include <queue>
@@ -53,68 +53,64 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-struct ShuZi
+struct human
 {
-    int s;
-    char y;
-} a[N];
+    int point, time, number;
+};
 
-inline bool cmp(ShuZi x, ShuZi y)
+inline bool cmp(human x, human y)
 {
-    if (x.s != y.s)
+    if (x.point == y.point)
     {
-        return x.s < y.s;
+        return x.time < y.time;
     }
-    return x.y < y.y;
+    return x.point > y.point;
 }
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
+    int n, m, h;
+    scanf("%d%d%d", &n, &m, &h);
+    human human[n + 1];
+    memset(human, 0, sizeof(human));
     for (int i = 0; i < n; i++)
     {
-        scanf("%d", &a[i].s);
+        human[i].number = i;
     }
-    getchar();
+
     for (int i = 0; i < n; i++)
     {
-        scanf("%c", &a[i].y);
+        int a[m];
+        for (int i = 0; i < m; i++)
+        {
+            scanf("%d", &a[i]);
+        }
+        sort(a, a + m);
+        int t = a[0];
+        for (int j = 0; j < m && t <= h; j++)
+        {
+            human[i].point++;
+            human[i].time += t;
+            t += a[j + 1];
+        }
     }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
+    sort(human, human + n, cmp);
+    for (int i = 0; i < n; i++)
     {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        if (!human[i].number)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
+            printf("%d\n", i + 1);
         }
     }
-    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();

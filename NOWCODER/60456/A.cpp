@@ -1,6 +1,6 @@
-// Problem: 游游的数组染色
+// Problem: 小红的环形字符串
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
+// URL: https://ac.nowcoder.com/acm/contest/60456/A
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -40,9 +40,9 @@
 */
 // #include <bits/stdc++.h>
 #include <cstdio>
-// #include <iostream>
+#include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -53,59 +53,50 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+    string s1, s2;
+    cin >> s1 >> s2;
+    int len1 = s1.length(), len2 = s2.length(), ans = 0;
+    for (int i = 0; i < len1 - len2 + 1; i++)
     {
-        scanf("%d", &a[i].s);
-    }
-    getchar();
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        for (int j = 0; j < len2; j++)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+            if (s1[i + j] != s2[j])
             {
-                i++;
-                y++;
+                break;
             }
-            ans += x * y;
+            if (j == len2 - 1)
+            {
+                ans++;
+            }
+        }
+    }
+    for (int i = len1 - len2 + 1; i < len1; i++)
+    {
+        for (int j = 0; j < len2; j++)
+        {
+            if (i + j < len1)
+            {
+                if (s1[i + j] != s2[j])
+                {
+                    break;
+                }
+            }
+            else
+            {
+                if (s1[i + j - len1] != s2[j])
+                {
+                    break;
+                }
+            }
+            if (j == len2 - 1)
+            {
+                ans++;
+            }
         }
     }
     printf("%d\n", ans);

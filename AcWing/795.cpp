@@ -1,7 +1,7 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
+// Problem: 前缀和
+// Contest: AcWing
+// URL: https://www.acwing.com/problem/content/797/
+// Memory Limit: 64 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -42,7 +42,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -53,62 +53,27 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
+int a[N];
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+    int n, m;
+    scanf("%d%d", &n, &m);
+    n++;
+    for (int i = 1; i < n; i++)
     {
-        scanf("%d", &a[i].s);
+        scanf("%d", &a[i]);
+        a[i] += a[i - 1];
     }
-    getchar();
-    for (int i = 0; i < n; i++)
+    while (m--)
     {
-        scanf("%c", &a[i].y);
+        int l, r;
+        scanf("%d%d", &l, &r);
+        printf("%d\n", a[r] - a[l - 1]);
     }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-        {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
-        }
-    }
-    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])

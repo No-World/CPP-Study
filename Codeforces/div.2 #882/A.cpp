@@ -1,8 +1,8 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
-// Time Limit: 2000 ms
+// Problem: A. The Man who became a God
+// Contest: Codeforces - Codeforces Round 882 (Div. 2)
+// URL: https://codeforces.com/contest/1847/problem/A
+// Memory Limit: 256 MB
+// Time Limit: 1000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -43,7 +43,7 @@
 // #include <iostream>
 // #include <cstring>
 #include <algorithm>
-// #include <cmath>
+#include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -53,60 +53,27 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
+    int n, k;
+    scanf("%d%d", &n, &k);
+    int a[n + 10], b[n + 10];
     for (int i = 0; i < n; i++)
     {
-        scanf("%d", &a[i].s);
+        scanf("%d", &a[i]);
     }
-    getchar();
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
-        scanf("%c", &a[i].y);
+        b[i] = fabs(a[i - 1] - a[i]);
     }
-    sort(a, a + n, cmp);
+    sort(b + 1, b + n);
     int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
+    for (int i = 0; i < n - k; i++)
     {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-        {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
-        }
+        ans += b[i + 1];
     }
     printf("%d\n", ans);
 }
@@ -114,7 +81,7 @@ inline void Solution()
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();

@@ -1,6 +1,7 @@
 #include <ctime>   //两个随机数
 #include <cstdlib> //必要头文件
 #include <cstdio>
+#include <iostream>
 #define MAXN 1000
 using namespace std;
 
@@ -21,7 +22,26 @@ double random3(int n)
 int main()
 {
     srand((unsigned)time(NULL));
-    int x = rand() % 1000000 + 1, y = random1(1000000) * 1000;
-    printf("%d %d\n", x, y);
+    int n = rand() % 200000;
+    printf("%d\n", n);
+    for (int i = 0; i < n; i++)
+    {
+        int a = 1e3;
+        a = random1(a);
+        printf("%d\n", a);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (rand() % 2 == 1)
+        {
+            printf("B");
+        }
+        else
+        {
+            printf("R");
+        }
+    }
+    printf("\n");
+
     return 0;
 }

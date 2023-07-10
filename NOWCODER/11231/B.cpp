@@ -1,7 +1,7 @@
-// Problem: 游游的数组染色
+// Problem: 数字串
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
+// URL: https://ac.nowcoder.com/acm/contest/11231/B
+// Memory Limit: 262144 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -41,8 +41,8 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
-#include <algorithm>
+#include <cstring>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -51,64 +51,63 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 5e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
+char L[N], R[N], s[N];
+int r, l, ans, n;
 
-struct ShuZi
+inline bool check(int ls, int rs)
 {
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
+    if (rs - ls + 1 < l)
+        return 0; // 看长度就知道不符合
+    if (rs - ls + 1 > r)
+        return 0;
+    if (rs - ls + 1 == l)
+    { // 位数相同才要比较，不然直接可以确定可以（下同）
+        for (int i = ls; i <= rs; i++)
+        {
+            if (s[i] > L[i - ls + 1])
+                break;
+            if (s[i] < L[i - ls + 1])
+                return 0;
+        }
     }
-    return x.y < y.y;
+    if (rs - ls + 1 == r)
+    {
+        for (int i = ls; i <= rs; i++)
+        {
+            if (s[i] < R[i - ls + 1])
+                break;
+            if (s[i] > R[i - ls + 1])
+                return 0;
+        }
+    }
+    return 1;
 }
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+    scanf("%s%s%s", L + 1, R + 1, s + 1);
+    l = strlen(L + 1);
+    r = strlen(R + 1);
+    n = strlen(s + 1);
+
+    int qdl = 0;
+    for (int i = 1; i <= n; i++)
     {
-        scanf("%d", &a[i].s);
-    }
-    getchar();
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-        {
-            i++;
-            x++;
+        if (s[i] == '0')
+        { // 处理前导 0
+            qdl++;
+            continue;
         }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
-        }
+        for (int j = l; j <= r && j + i - 1 <= n; j++)
+            ans += (qdl + 1) * check(i, i + j - 1); // 前导 0 选多少个都可以，所以要乘上个数加一
+        qdl = 0;                                    // 清空前导零个数
     }
-    printf("%d\n", ans);
+
+    printf("%lld\n", ans);
 }
 
 int main(int argc, char const *argv[])

@@ -1,8 +1,8 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
-// Time Limit: 2000 ms
+// Problem: B. Binary Cafe
+// Contest: Codeforces - Codeforces Round 878 (Div. 3)
+// URL: https://codeforces.com/contest/1840/problem/B
+// Memory Limit: 256 MB
+// Time Limit: 1000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -42,7 +42,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -53,68 +53,43 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+    int n, k;
+    scanf("%d%d", &n, &k);
+    int uu = 1, cnt = 0;
+    while (uu <= n && cnt < k)
     {
-        scanf("%d", &a[i].s);
+        uu *= 2;
+        cnt++;
     }
-    getchar();
-    for (int i = 0; i < n; i++)
+    if (uu <= n)
     {
-        scanf("%c", &a[i].y);
+        printf("%d\n", uu);
     }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
+    else
     {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        int ans = 0;
+        for (int i = 0; i <= cnt; i++)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+            if (n >= uu)
             {
-                i++;
-                y++;
+                n -= uu;
+                ans += uu;
             }
-            ans += x * y;
+            uu /= 2;
         }
+        printf("%d\n", ans + 1);
     }
-    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();

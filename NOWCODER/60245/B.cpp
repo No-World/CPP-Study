@@ -51,7 +51,7 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 2e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
@@ -85,7 +85,7 @@ inline void Solution()
         scanf("%c", &a[i].y);
     }
     sort(a, a + n, cmp);
-    int ans = 0;
+    ll ans = 0;
     int x = 0, y = 0, z = 0;
     for (int i = 0; i < n;)
     {
@@ -108,7 +108,7 @@ inline void Solution()
             ans += x * y;
         }
     }
-    printf("%d\n", ans);
+    printf("%lld\n", ans);
 }
 
 int main(int argc, char const *argv[])

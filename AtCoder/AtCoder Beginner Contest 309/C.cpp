@@ -1,7 +1,7 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
+// Problem: C - Medicine
+// Contest: AtCoder - Denso Create Programming Contest 2023 (AtCoder Beginner Contest 309)
+// URL: https://atcoder.jp/contests/abc309/tasks/abc309_c
+// Memory Limit: 1024 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -51,64 +51,48 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-struct ShuZi
+struct Medicine
 {
-    int s;
-    char y;
-} a[N];
+    ll d, n;
+};
 
-inline bool cmp(ShuZi x, ShuZi y)
+inline bool cmp(Medicine x, Medicine y)
 {
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
+    return x.d < y.d;
 }
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
+    int n, k;
+    scanf("%d%d", &n, &k);
+    Medicine med[n + 10];
+    ll sum = 0;
     for (int i = 0; i < n; i++)
     {
-        scanf("%d", &a[i].s);
+        scanf("%lld%lld", &med[i].d, &med[i].n);
+        sum += med[i].n;
     }
-    getchar();
+    if (sum <= k)
+    {
+        printf("1\n");
+        return;
+    }
+
+    sort(med, med + n, cmp);
     for (int i = 0; i < n; i++)
     {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        sum -= med[i].n;
+        if (sum <= k)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
+            printf("%lld\n", med[i].d + 1);
+            return;
         }
     }
-    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])

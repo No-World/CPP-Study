@@ -1,6 +1,6 @@
-// Problem: 游游的数组染色
+// Problem: 游游的交换字符
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
+// URL: https://ac.nowcoder.com/acm/contest/60245/C
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -41,8 +41,8 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
 #include <algorithm>
+#include <cstring>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -51,64 +51,63 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 2e5 + 10;
-// const ll INF = __LONG_LONG_MAX__;
+const ll INF = __LONG_LONG_MAX__;
 
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
+char s[N];
 
 inline void Solution()
 {
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
+    scanf("%s", s + 1);
+    ll len = strlen(s + 1), num = 0;
+    for (int i = 1; i <= len; i++)
     {
-        scanf("%d", &a[i].s);
-    }
-    getchar();
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        if (s[i] == '0')
         {
-            i++;
-            x++;
+            num++;
         }
-        if (a[i].s == a[i - 1].s)
+    }
+    ll ans = INF, unum = len - num;
+    if (num != unum)
+    {
+        ll r = 0, p = num > unum ? 0 : 1;
+        for (int i = 1; i <= len; i++)
         {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+            if (s[i] == '0')
             {
-                i++;
-                y++;
+                r += abs(i - p - 1);
+                p += 2;
             }
-            ans += x * y;
+            // printf("%d %d\n", r, p);
         }
+        ans = min(ans, r);
     }
-    printf("%d\n", ans);
+    else
+    {
+        ll p = 0, r = 0;
+        for (int i = 1; i <= len; i++)
+        {
+            if (s[i] == '0')
+            {
+                r += abs(i - p - 1);
+                p += 2;
+            }
+        }
+        ans = min(ans, r);
+        p = 1, r = 0;
+        for (int i = 1; i <= len; i++)
+        {
+            if (s[i] == '0')
+            {
+                r += abs(i - p - 1);
+                p += 2;
+            }
+        }
+        ans = min(ans, r);
+    }
+    printf("%lld\n", ans);
 }
 
 int main(int argc, char const *argv[])

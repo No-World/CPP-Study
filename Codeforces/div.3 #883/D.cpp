@@ -1,7 +1,7 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
+// Problem: D. Rudolph and Christmas Tree
+// Contest: Codeforces - Codeforces Round 883 (Div. 3)
+// URL: https://codeforces.com/contest/1846/problem/D
+// Memory Limit: 256 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -40,7 +40,7 @@
 */
 // #include <bits/stdc++.h>
 #include <cstdio>
-// #include <iostream>
+#include <iostream>
 // #include <cstring>
 #include <algorithm>
 // #include <cmath>
@@ -52,69 +52,38 @@
 // #include <unordered_map>
 // #include <cstdlib>
 // typedef long long ll;
+typedef double db;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
 
 inline void Solution()
 {
     int n;
-    scanf("%d", &n);
+    db d, h;
+    scanf("%d%lf%lf", &n, &d, &h);
+    db H[n];
     for (int i = 0; i < n; i++)
     {
-        scanf("%d", &a[i].s);
+        scanf("%lf", &H[i]);
     }
-    getchar();
-    for (int i = 0; i < n; i++)
+    sort(H, H + n);
+    db sum = n;
+    for (int i = 1; i < n; i++)
     {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
-    int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
-    {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        int x = H[i] - H[i - 1];
+        if (x < h)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
+            sum -= ((x - h) / h) * ((x - h) / h);
         }
     }
-    printf("%d\n", ans);
+    printf("%lf\n", sum * d * h / 2);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();

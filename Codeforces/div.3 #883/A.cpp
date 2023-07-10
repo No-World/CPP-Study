@@ -1,7 +1,7 @@
-// Problem: 游游的数组染色
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/60245/B
-// Memory Limit: 524288 MB
+// Problem: A. Rudolph and Cut the Rope
+// Contest: Codeforces - Codeforces Round 883 (Div. 3)
+// URL: https://codeforces.com/contest/1846/problem/A
+// Memory Limit: 256 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -42,7 +42,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -53,59 +53,21 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-struct ShuZi
-{
-    int s;
-    char y;
-} a[N];
-
-inline bool cmp(ShuZi x, ShuZi y)
-{
-    if (x.s != y.s)
-    {
-        return x.s < y.s;
-    }
-    return x.y < y.y;
-}
 
 inline void Solution()
 {
     int n;
     scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%d", &a[i].s);
-    }
-    getchar();
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%c", &a[i].y);
-    }
-    sort(a, a + n, cmp);
     int ans = 0;
-    int x = 0, y = 0, z = 0;
-    for (int i = 0; i < n;)
+    while (n--)
     {
-        i++;
-        x = 1;
-        while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
+        int a, b;
+        scanf("%d%d", &a, &b);
+        if (a > b)
         {
-            i++;
-            x++;
-        }
-        if (a[i].s == a[i - 1].s)
-        {
-            i++;
-            y = 1;
-            while (a[i].s == a[i - 1].s && a[i].y == a[i - 1].y)
-            {
-                i++;
-                y++;
-            }
-            ans += x * y;
+            ans++;
         }
     }
     printf("%d\n", ans);
@@ -114,7 +76,7 @@ inline void Solution()
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();
