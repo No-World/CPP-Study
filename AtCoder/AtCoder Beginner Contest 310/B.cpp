@@ -1,7 +1,7 @@
-// Problem: Roulette
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57355/J
-// Memory Limit: 1048576 MB
+// Problem: B - Strictly Superior
+// Contest: AtCoder - freee Programming Contest 2023（AtCoder Beginner Contest 310）
+// URL: https://atcoder.jp/contests/abc310/tasks/abc310_b
+// Memory Limit: 1024 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -42,92 +42,73 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
-#include <cmath>
+#include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
 // #include <stack>
-#include <cctype>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
-const ll INF = __LONG_LONG_MAX__, mod = 998244353;
+const int inf = 0x3f3f3f3f, N = 1e2 + 10;
+// const ll INF = __LONG_LONG_MAX__;
 
-ll X[N], Y[N], x, y;
-
-inline void exgcd(int a, int b)
+struct production
 {
-    if (b == 0)
-    {
-        x = 1;
-        y = 0;
-        return;
-    }
-    exgcd(b, a % b);
-    int Last_x = x;
-    x = y;
-    y = Last_x - a / b * y;
-}
+    int p, c;
+    bool f[N];
+} PDT[N];
 
-// 快速幂算法a^b%mod
-inline ll binpow(ll a, ll b)
+inline bool cmp(production x, production y)
 {
-    a %= mod;
-    ll res = 1;
-    while (b > 0)
+    if (x.p == y.p)
     {
-        if (b & 1)
-        {
-            res = res * a % mod;
-        }
-        a = a * a % mod;
-        b >>= 1;
+        return x.c < y.c;
     }
-    return res;
-}
-
-inline ll LOG(ll n)
-{
-    ll LOGn;
-    if ((ll)log2(n) == log2(n) && n != 1)
-    {
-        LOGn = log2(n);
-    }
-    else
-    {
-        LOGn = log2(n) + 1;
-    }
-    return LOGn;
+    return x.p > y.p;
 }
 
 inline void Solution()
 {
-    ll n, m, a = 1, b = 1;
-    scanf("%lld%lld", &n, &m);
-    int cnt = log2(n);
-    X[0] = Y[0] = 1;
-    for (ll i = 1 << cnt; i <= (n + m) * 2; i <<= 1)
+    int n, m;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; i++)
     {
-        X[cnt] = i - 1, Y[cnt] = i;
-        cnt++;
+        scanf("%d%d", &PDT[i].p, &PDT[i].c);
+        int f;
+        for (int j = 0; j < PDT[i].c; j++)
+        {
+            scanf("%d", &f);
+            PDT[i].f[f] = 1;
+        }
     }
-    m += n;
-    for (n; n < m;)
+    sort(PDT, PDT + n, cmp);
+    for (int i = 0; i < n; i++)
     {
-        ll LOGn = LOG(n), num = min(1 + (ll(1) << LOGn), m);
-        a *= binpow(X[LOGn], num - n);
-        a %= mod;
-        b *= binpow(Y[LOGn], num - n);
-        b %= mod;
-        n = num;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (PDT[i].c > PDT[j].c || (PDT[i].p == PDT[j].p && PDT[i].c == PDT[j].c))
+            {
+                continue;
+            }
+            for (int k = 0; k < m; k++)
+            {
+                if (PDT[i].f[k] && !PDT[j].f[k])
+                {
+                    break;
+                }
+                if (k == PDT[i].c - 1)
+                {
+                    printf("Yes\n");
+                    return;
+                }
+            }
+        }
     }
-    exgcd(b, mod);
-    x = (x % mod + mod) % mod;
-    printf("%lld\n", a * (long long)(x) % mod);
+    printf("No\n");
 }
 
 int main(int argc, char const *argv[])

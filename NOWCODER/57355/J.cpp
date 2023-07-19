@@ -42,7 +42,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 #include <cmath>
 // #include <queue>
 // #include <map>
@@ -59,6 +59,20 @@ const ll INF = __LONG_LONG_MAX__, mod = 998244353;
 
 ll X[N], Y[N], x, y;
 
+ll fastPow(ll a, ll n)
+{
+    ll base = a; // 不用base直接用a也行
+    ll res = 1;  // 用res返回结果
+    while (n)
+    {
+        if (n & 1) // 如果n的最后一位是1，表示这个地方需要乘
+            res = (res * base) % mod;
+        base = (base * base) % mod; // 推算乘积：a² --> (a²)² -->((a²)²)² ...
+        n >>= 1;
+    }
+    return res;
+}
+
 inline void exgcd(int a, int b)
 {
     if (b == 0)
@@ -72,38 +86,6 @@ inline void exgcd(int a, int b)
     x = y;
     y = Last_x - a / b * y;
 }
-
-// 快速幂算法a^b%mod
-inline ll binpow(ll a, ll b)
-{
-    a %= mod;
-    ll res = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            res = res * a % mod;
-        }
-        a = a * a % mod;
-        b >>= 1;
-    }
-    return res;
-}
-
-inline ll LOG(ll n)
-{
-    ll LOGn;
-    if ((ll)log2(n) == log2(n) && n != 1)
-    {
-        LOGn = log2(n);
-    }
-    else
-    {
-        LOGn = log2(n) + 1;
-    }
-    return LOGn;
-}
-
 inline void Solution()
 {
     ll n, m, a = 1, b = 1;
@@ -116,12 +98,13 @@ inline void Solution()
         cnt++;
     }
     m += n;
-    for (n; n < m;)
+    while (n < m)
     {
-        ll LOGn = LOG(n), num = min(1 + (ll(1) << LOGn), m);
-        a *= binpow(X[LOGn], num - n);
+        ll LOG = log2(n + 1), num = min(((ll)1 << (LOG + 1)) - 1, m);
+        a *= fastPow(X[LOG], num - n);
         a %= mod;
-        b *= binpow(Y[LOGn], num - n);
+        b *= fastPow(Y[LOG], num - n);
+        // printf("%lld %lld\n", a, b);
         b %= mod;
         n = num;
     }

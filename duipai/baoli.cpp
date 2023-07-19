@@ -1,68 +1,57 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <set>
+#include <bits/stdc++.h>
+
+#define int long long
+#define de(x) cout << #x << " = " << x << endl
+#define dd(x) cout << #x << " = " << x
 using namespace std;
-vector<long long> r;
-vector<long long> b;
-int n;
-long long a[200005];
-char c[200005];
-int main()
+using ll = long long;
+const int MOD = 998244353;
+
+ll qpow(ll x, ll n)
 {
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-        cin >> a[i];
-    for (int i = 1; i <= n; i++)
+    ll res = 1;
+    while (n)
     {
-        cin >> c[i];
-        if (c[i] == 'R')
-            r.push_back(a[i]);
-        else
-            b.push_back(a[i]);
-    }
-    if (r.size() == 0 || b.size() == 0)
-    {
-        cout << 0;
-        return 0;
-    }
-    sort(b.begin(), b.end()); // x小到大
-    long long ans = 0;
-    for (int i = 0; i < r.size(); i++)
-    {
-        // 将r数据中的数据一一在b数组中查找相同值得元素的总个数
-        int x = 0, y = b.size() - 1;
-        while (x < y)
-        {
-            int mid = (x + y + 1) / 2;
-            if (b[mid] < r[i])
-                x = mid + 1;
-            else if (b[mid] > r[i])
-                y = mid - 1;
-            else if (b[mid] == r[i])
-            {
-                if (b[mid - 1] < r[i])
-                    x = mid;
-                else
-                    y = mid - 1;
-            }
-        }
-        if (b[x] == r[i])
-        {
-            // 已经在b容器中找到r[i],下一步就是找第一个比r[i]大的数
-            int L = x, R = b.size() - 1;
-            while (L < R)
-            {
-                int mid = (L + R + 1) / 2;
-                if (b[mid] <= r[i])
-                    L = mid;
-                else
-                    R = mid - 1;
-            }
-            ans += L - x + 1;
-        }
+        if (n & 1)
+            res = res * x % MOD;
+        n >>= 1;
+        x = x * x % MOD;
     }
 
-    cout << ans;
+    return res;
+}
+
+ll inv(ll x)
+{
+    return qpow(x, MOD - 2);
+}
+
+int f(int n, int &r)
+{
+    r = -1;
+    int k = 1;
+    while (k <= n + 1)
+        k <<= 1, r++;
+    return k - 2;
+}
+
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n, m;
+    cin >> n >> m;
+
+    ll st = 1;
+    for (int l = n, r, k; l < n + m; l = r + 1)
+    {
+        r = min(f(l, k), n + m - 1);
+
+        ll p = (1 - qpow(inv(2), k) + MOD) % MOD;
+
+        st = st * qpow(p, r - l + 1) % MOD;
+    }
+
+    cout << st << '\n';
     return 0;
 }

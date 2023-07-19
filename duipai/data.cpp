@@ -22,26 +22,7 @@ double random3(int n)
 int main()
 {
     srand((unsigned)time(NULL));
-    int n = rand() % 200000;
-    printf("%d\n", n);
-    for (int i = 0; i < n; i++)
-    {
-        int a = 1e3;
-        a = random1(a);
-        printf("%d\n", a);
-    }
-    for (int i = 0; i < n; i++)
-    {
-        if (rand() % 2 == 1)
-        {
-            printf("B");
-        }
-        else
-        {
-            printf("R");
-        }
-    }
-    printf("\n");
+    printf("1 5\n");
 
     return 0;
 }

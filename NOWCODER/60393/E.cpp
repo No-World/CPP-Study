@@ -1,7 +1,7 @@
-// Problem: Roulette
+// Problem: 括号序列操作专家
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57355/J
-// Memory Limit: 1048576 MB
+// URL: https://ac.nowcoder.com/acm/contest/60393/E
+// Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -43,97 +43,57 @@
 // #include <iostream>
 // #include <cstring>
 // #include <algorithm>
-#include <cmath>
-// #include <queue>
+// #include <cmath>
+#include <queue>
 // #include <map>
 // #include <vector>
 // #include <stack>
-#include <cctype>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
-const ll INF = __LONG_LONG_MAX__, mod = 998244353;
-
-ll X[N], Y[N], x, y;
-
-inline void exgcd(int a, int b)
-{
-    if (b == 0)
-    {
-        x = 1;
-        y = 0;
-        return;
-    }
-    exgcd(b, a % b);
-    int Last_x = x;
-    x = y;
-    y = Last_x - a / b * y;
-}
-
-// 快速幂算法a^b%mod
-inline ll binpow(ll a, ll b)
-{
-    a %= mod;
-    ll res = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            res = res * a % mod;
-        }
-        a = a * a % mod;
-        b >>= 1;
-    }
-    return res;
-}
-
-inline ll LOG(ll n)
-{
-    ll LOGn;
-    if ((ll)log2(n) == log2(n) && n != 1)
-    {
-        LOGn = log2(n);
-    }
-    else
-    {
-        LOGn = log2(n) + 1;
-    }
-    return LOGn;
-}
+const int inf = 0x3f3f3f3f, N = 2e5 + 10;
+// const ll INF = __LONG_LONG_MAX__;
 
 inline void Solution()
 {
-    ll n, m, a = 1, b = 1;
-    scanf("%lld%lld", &n, &m);
-    int cnt = log2(n);
-    X[0] = Y[0] = 1;
-    for (ll i = 1 << cnt; i <= (n + m) * 2; i <<= 1)
+    int n;
+    ll ans = 0, sum = 0;
+    scanf("%d", &n);
+    getchar();
+    char s;
+    scanf("%c", &s);
+    while (s != '\n')
     {
-        X[cnt] = i - 1, Y[cnt] = i;
-        cnt++;
+        if (s == '(')
+        {
+            if (sum > 0)
+            {
+                ans += sum;
+            }
+            sum--;
+        }
+        else
+        {
+            sum++;
+        }
+        scanf("%c", &s);
     }
-    m += n;
-    for (n; n < m;)
+    if (sum)
     {
-        ll LOGn = LOG(n), num = min(1 + (ll(1) << LOGn), m);
-        a *= binpow(X[LOGn], num - n);
-        a %= mod;
-        b *= binpow(Y[LOGn], num - n);
-        b %= mod;
-        n = num;
+        printf("-1\n");
     }
-    exgcd(b, mod);
-    x = (x % mod + mod) % mod;
-    printf("%lld\n", a * (long long)(x) % mod);
+    else
+    {
+        printf("%lld\n", ans);
+    }
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();
