@@ -1,6 +1,6 @@
-// Problem: 爬山
+// Problem: Box
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/61657/G
+// URL: https://ac.nowcoder.com/acm/contest/57356/K
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,12 +38,36 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
+
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         佛祖保佑       永无BUG
+*/
+
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
 #include <algorithm>
-#include <cmath>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -56,10 +80,35 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e6 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-ll a[N], b[N];
+ll a[N], b[N], dp[N][3];
 
 inline void Solution()
 {
+    int n;
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++)
+    {
+        scanf("%lld", &a[i]);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        scanf("%lld", &b[i]);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        if (b[i])
+        {
+            dp[i][0] = dp[i - 1][0] + a[i - 1];
+            dp[i][1] = max(dp[i - 1][0], dp[i - 1][1]) + a[i];
+            dp[i][2] = max({dp[i - 1][0], dp[i - 1][1], dp[i - 1][2]}) + a[i + 1];
+        }
+        else
+        {
+            dp[i][0] = max(dp[i - 1][1], dp[i - 1][0]);
+            dp[i][1] = dp[i - 1][2];
+        }
+    }
+    printf("%lld\n", max(dp[n][0], dp[n][1]));
 }
 
 int main(int argc, char const *argv[])

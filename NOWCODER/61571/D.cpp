@@ -1,6 +1,6 @@
-// Problem: 爬山
+// Problem: 游游的因子计算
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/61657/G
+// URL: https://ac.nowcoder.com/acm/contest/61571/D
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,6 +38,30 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
+
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         佛祖保佑       永无BUG
+*/
+
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
@@ -48,18 +72,49 @@
 // #include <map>
 // #include <vector>
 // #include <stack>
-// #include <set>
+#include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e6 + 10;
+const int inf = 0x3f3f3f3f, N = 1e7 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
 ll a[N], b[N];
-
 inline void Solution()
 {
+    ll n, m;
+    scanf("%lld%lld", &n, &m);
+    int x = 0, y = 0;
+    for (int i = 1; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            a[x++] = i;
+            a[x++] = n / i;
+        }
+    }
+    for (int i = 1; i <= sqrt(m); i++)
+    {
+        if (m % i == 0)
+        {
+            b[y++] = i;
+            b[y++] = m / i;
+        }
+    }
+    std::set<ll> q;
+    for (int i = 0; i < x; i++)
+    {
+        for (int j = 0; j < y; j++)
+        {
+            q.insert(a[i] * b[j]);
+        }
+    }
+    printf("%lld\n", q.size());
+    for (ll it : q)
+    {
+        printf("%lld ", it);
+    }
+    printf("\n");
 }
 
 int main(int argc, char const *argv[])

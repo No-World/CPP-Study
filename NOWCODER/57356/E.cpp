@@ -1,6 +1,6 @@
-// Problem: 爬山
+// Problem: Square
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/61657/G
+// URL: https://ac.nowcoder.com/acm/contest/57356/E
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,12 +38,36 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
+
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         佛祖保佑       永无BUG
+*/
+
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
-#include <cmath>
+// #include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -53,19 +77,50 @@
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e6 + 10;
-// const ll INF = __LONG_LONG_MAX__;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const ll INF = __LONG_LONG_MAX__ / 10;
 
-ll a[N], b[N];
+ll sqrt(ll x)
+{
+    // 避免除零错误，单独处理 x = 0 的情况
+    if (x == 0)
+        return x;
+    ll t = x / 2 + 1;
+    while (t > x / t)
+        t = (t + x / t) / 2;
+    return t;
+}
 
 inline void Solution()
 {
+    ll x;
+    scanf("%lld", &x);
+    for (ll i = 1; i < 1e18; i *= 10)
+    {
+        unsigned long long st1 = (unsigned long long)i * x;
+        if (st1 > 1e18)
+        {
+            break;
+        }
+        ll st = sqrt(st1);
+        if (st * st / i == x)
+        {
+            printf("%lld\n", st);
+            return;
+        }
+        else if ((st + 1) * (st + 1) / i == x)
+        {
+            printf("%lld\n", st + 1);
+            return;
+        }
+    }
+    printf("-1\n");
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();

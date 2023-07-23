@@ -1,6 +1,6 @@
-// Problem: 爬山
+// Problem: 游游的字符串构造
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/61657/G
+// URL: https://ac.nowcoder.com/acm/contest/61571/A
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,12 +38,36 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
+
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         佛祖保佑       永无BUG
+*/
+
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
-#include <cmath>
+// #include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -51,15 +75,30 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e6 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-ll a[N], b[N];
 
 inline void Solution()
 {
+    int n, k;
+    scanf("%d%d", &n, &k);
+    if (n / k < 3)
+    {
+        printf("-1\n");
+        return;
+    }
+    for (int i = 0; i < k; i++)
+    {
+        printf("you");
+    }
+    n -= k * 3;
+    for (int i = 0; i < n; i++)
+    {
+        printf("y");
+    }
+    printf("\n");
 }
 
 int main(int argc, char const *argv[])
