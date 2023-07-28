@@ -1,7 +1,7 @@
-// Problem: World Fragments I
+// Problem: Ama no Jaku
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57357/A
-// Memory Limit: 1048576 MB
+// URL: https://ac.nowcoder.com/acm/contest/57357/D
+// Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -64,10 +64,10 @@
 
 // #include <bits/stdc++.h>
 #include <cstdio>
-// #include <iostream>
-#include <cstring>
+#include <iostream>
+// #include <cstring>
 #include <algorithm>
-#include <cmath>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -75,36 +75,61 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 2e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-char a[N], b[N];
+char mp[N][N];
 
 inline void Solution()
 {
-    ll x = 0, y = 0;
-    scanf("%s%s", a, b);
-    int lena = strlen(a), lenb = strlen(b);
-    ll pow1 = 1, pow2 = 1;
-    for (int i = lena - 1; i > -1; i--)
+    int n, res = 1e9;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
     {
-        x += (a[i] - '0') * pow1;
-        pow1 *= 2;
+        scanf("%s", mp[i]);
+        for (int j = 0; j < n; j++)
+        {
+            mp[i][j] -= '0';
+        }
     }
-    for (int i = lenb - 1; i > -1; i--)
+    int a = 0, b = 0;
+    for (int i = 0; i < n; i++)
     {
-        y += (b[i] - '0') * pow2;
-        pow2 *= 2;
+        if (mp[i][0])
+        {
+            for (int j = 0; j < n; j++)
+            {
+                mp[i][j] ^= 1;
+            }
+            a++;
+        }
     }
-    if (x == 0 && x != y)
+    for (int i = 0; i < n; i++)
     {
-        printf("-1\n");
-        return;
+        if (mp[0][i])
+        {
+            for (int j = 0; j < n; j++)
+            {
+                mp[j][i] ^= 1;
+            }
+            b++;
+        }
     }
-    ll num = fabs(x - y);
-    printf("%lld\n", num);
+    // 当整张图全部为0或者1时，才符合min(ri) >= max(ci)
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (mp[i][j])
+            {
+                printf("-1\n");
+                return;
+            }
+        }
+    }
+    printf("%d\n", min(a, n - a) + min(b, n - b));
 }
 
 int main(int argc, char const *argv[])

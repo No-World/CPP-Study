@@ -1,7 +1,7 @@
-// Problem: World Fragments I
+// Problem: Until the Blue Moon Rises
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57357/A
-// Memory Limit: 1048576 MB
+// URL: https://ac.nowcoder.com/acm/contest/57357/H
+// Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -65,8 +65,8 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-#include <cstring>
-#include <algorithm>
+// #include <cstring>
+// #include <algorithm>
 #include <cmath>
 // #include <queue>
 // #include <map>
@@ -80,31 +80,51 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-char a[N], b[N];
+inline bool SuShu(ll a)
+{
+    if (a == 1)
+    {
+        return 0; // 1不是素数
+    }
+    for (ll j = 2; j <= sqrt(a); j++)
+    {
+        if (a % j == 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
 
 inline void Solution()
 {
-    ll x = 0, y = 0;
-    scanf("%s%s", a, b);
-    int lena = strlen(a), lenb = strlen(b);
-    ll pow1 = 1, pow2 = 1;
-    for (int i = lena - 1; i > -1; i--)
+    ll n, num = 0;
+    scanf("%lld", &n);
+    for (int i = 0; i < n; i++)
     {
-        x += (a[i] - '0') * pow1;
-        pow1 *= 2;
+        ll x;
+        scanf("%lld", &x);
+        num += x;
     }
-    for (int i = lenb - 1; i > -1; i--)
+    if (n == 1)
     {
-        y += (b[i] - '0') * pow2;
-        pow2 *= 2;
+        printf("%s\n", SuShu(num) ? "Yes" : "No");
     }
-    if (x == 0 && x != y)
+    else if (n == 2)
     {
-        printf("-1\n");
-        return;
+        if (num % 2)
+        {
+            printf("%s\n", SuShu(num - 2) ? "Yes" : "No");
+        }
+        else
+        {
+            printf("%s\n", num / n >= 2 ? "Yes" : "No");
+        }
     }
-    ll num = fabs(x - y);
-    printf("%lld\n", num);
+    else
+    {
+        printf("%s\n", num / n >= 2 ? "Yes" : "No");
+    }
 }
 
 int main(int argc, char const *argv[])

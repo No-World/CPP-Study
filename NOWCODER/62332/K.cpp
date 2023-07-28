@@ -1,8 +1,8 @@
-// Problem: World Fragments I
+// Problem: 发工资咯
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57357/A
-// Memory Limit: 1048576 MB
-// Time Limit: 2000 ms
+// URL: https://ac.nowcoder.com/acm/contest/62332/A
+// Memory Limit: 524288 MB
+// Time Limit: 4000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -65,9 +65,9 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-#include <cstring>
-#include <algorithm>
-#include <cmath>
+// #include <cstring>
+// #include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -75,36 +75,34 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 1e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-char a[N], b[N];
+char s[N];
 
 inline void Solution()
 {
-    ll x = 0, y = 0;
-    scanf("%s%s", a, b);
-    int lena = strlen(a), lenb = strlen(b);
-    ll pow1 = 1, pow2 = 1;
-    for (int i = lena - 1; i > -1; i--)
+    int n;
+    scanf("%d%s", &n, s);
+    bool flag = false;
+    for (int i = 0; i < n; i++)
     {
-        x += (a[i] - '0') * pow1;
-        pow1 *= 2;
+        if (s[i] == '(')
+        {
+            flag = 1;
+        }
+        else if (s[i] == ',' && flag)
+        {
+            s[i] = '.';
+        }
+        else if (s[i] == ')')
+        {
+            flag = 0;
+        }
     }
-    for (int i = lenb - 1; i > -1; i--)
-    {
-        y += (b[i] - '0') * pow2;
-        pow2 *= 2;
-    }
-    if (x == 0 && x != y)
-    {
-        printf("-1\n");
-        return;
-    }
-    ll num = fabs(x - y);
-    printf("%lld\n", num);
+    printf("%s\n", s);
 }
 
 int main(int argc, char const *argv[])

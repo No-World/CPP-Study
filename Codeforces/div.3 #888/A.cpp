@@ -1,7 +1,7 @@
-// Problem: World Fragments I
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57357/A
-// Memory Limit: 1048576 MB
+// Problem: A. Escalator Conversations
+// Contest: Codeforces - Codeforces Round 888 (Div. 3)
+// URL: https://codeforces.com/contest/1851/problem/A
+// Memory Limit: 256 MB
 // Time Limit: 2000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
@@ -65,9 +65,9 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-#include <cstring>
-#include <algorithm>
-#include <cmath>
+// #include <cstring>
+// #include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -75,42 +75,36 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 1e2 + 10;
 // const ll INF = __LONG_LONG_MAX__;
-
-char a[N], b[N];
 
 inline void Solution()
 {
-    ll x = 0, y = 0;
-    scanf("%s%s", a, b);
-    int lena = strlen(a), lenb = strlen(b);
-    ll pow1 = 1, pow2 = 1;
-    for (int i = lena - 1; i > -1; i--)
+    // 共有n名乘客。自动扶梯共有m级，所有梯级的高度从1到m依次递增，第i级的高度为i⋅k，弗拉德的身高是H厘米
+    int n, m, k, H, ans = 0;
+    scanf("%d%d%d%d", &n, &m, &k, &H);
+    for (int i = 0; i < n; i++)
     {
-        x += (a[i] - '0') * pow1;
-        pow1 *= 2;
+        int h;
+        scanf("%d", &h);
+        if (h > H && (h - H) % k == 0 && ((h - H) / k) < m)
+        {
+            ans++;
+        }
+        else if (h < H && (H - h) % k == 0 && ((H - h) / k) < m)
+        {
+            ans++;
+        }
     }
-    for (int i = lenb - 1; i > -1; i--)
-    {
-        y += (b[i] - '0') * pow2;
-        pow2 *= 2;
-    }
-    if (x == 0 && x != y)
-    {
-        printf("-1\n");
-        return;
-    }
-    ll num = fabs(x - y);
-    printf("%lld\n", num);
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();
