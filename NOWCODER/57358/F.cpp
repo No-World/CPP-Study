@@ -1,8 +1,8 @@
-// Problem: C. Tiles Comeback
-// Contest: Codeforces - Codeforces Round 888 (Div. 3)
-// URL: https://codeforces.com/contest/1851/problem/C
-// Memory Limit: 256 MB
-// Time Limit: 2000 ms
+// Problem: Election of the King
+// Contest: NowCoder
+// URL: https://ac.nowcoder.com/acm/contest/57358/F
+// Memory Limit: 1048576 MB
+// Time Limit: 4000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -66,10 +66,10 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
-#include <map>
+// #include <map>
 // #include <vector>
 // #include <stack>
 // #include <set>
@@ -77,35 +77,50 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 1e6 + 10;
 // const ll INF = __LONG_LONG_MAX__;
+
+struct node
+{
+    int x;
+    int y;
+} a[N];
+
+inline bool cmp(node a, node b)
+{
+    return a.x < b.x;
+}
 
 inline void Solution()
 {
-    int n, k, st, ed;
-    scanf("%d%d", &n, &k);
-    map<int, int> mp;
-    scanf("%d", &st);
-    mp[st]++;
-    for (int i = 1; i < n; i++)
+    int n;
+    scanf("%d", &n);
+    for (int i; i < n; i++)
     {
-        int x;
-        scanf("%d", &x);
-        mp[x]++;
-        ed = x;
+        scanf("%d", &a[i].x);
+        a[i].y = i + 1;
     }
-    if (mp[st] >= k && mp[ed] >= k)
+    sort(a, a + n, cmp);
+    int i = 0, j = n - 1;
+    while (j != i)
     {
-        printf("YES\n");
-        return;
+        int m = (i + j) / 2;
+        if (a[m].x - a[i].x > a[j].x - a[m].x)
+        {
+            i++;
+        }
+        else
+        {
+            j--;
+        }
     }
-    printf("NO\n");
+    printf("%d\n", a[i].y);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    scanf("%d", &T);
+    // scanf("%d", &T);
     while (T--)
     {
         Solution();

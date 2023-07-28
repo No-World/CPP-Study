@@ -1,8 +1,8 @@
-// Problem: C. Tiles Comeback
-// Contest: Codeforces - Codeforces Round 888 (Div. 3)
-// URL: https://codeforces.com/contest/1851/problem/C
-// Memory Limit: 256 MB
-// Time Limit: 2000 ms
+// Problem: We are the Lights
+// Contest: NowCoder
+// URL: https://ac.nowcoder.com/acm/contest/57358/L
+// Memory Limit: 1048576 MB
+// Time Limit: 4000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -66,46 +66,62 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
-#include <map>
+// #include <map>
 // #include <vector>
 // #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 1e6 + 10;
 // const ll INF = __LONG_LONG_MAX__;
+
+ll r[N], c[N];
 
 inline void Solution()
 {
-    int n, k, st, ed;
-    scanf("%d%d", &n, &k);
-    map<int, int> mp;
-    scanf("%d", &st);
-    mp[st]++;
-    for (int i = 1; i < n; i++)
+    int n, m, q;
+    scanf("%d%d%d", &n, &m, &q);
+    ll ans = 0;
+    char a[10], b[10];
+    for (int i = 1; i <= q; ++i)
     {
         int x;
-        scanf("%d", &x);
-        mp[x]++;
-        ed = x;
+        scanf("%s%d%s", a, &x, b);
+        if (a[0] == 'r')
+        {
+            r[x] = i;
+            if (b[1] == 'f')
+            {
+                r[x] *= -1;
+            }
+        }
+        else
+        {
+            c[x] = i;
+            if (b[1] == 'f')
+            {
+                c[x] *= -1;
+            }
+        }
     }
-    if (mp[st] >= k && mp[ed] >= k)
+    sort(c + 1, c + m + 1);
+    for (int i = 1; i <= n; ++i)
     {
-        printf("YES\n");
-        return;
+        int p = upper_bound(c + 1, c + m + 1, -r[i]) - c - 1;
+        ans += m - p;
     }
-    printf("NO\n");
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    scanf("%d", &T);
+    // scanf("%d", &T);
     while (T--)
     {
         Solution();
