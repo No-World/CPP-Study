@@ -1,6 +1,6 @@
-// Problem: Writing Books
+// Problem: 异或与
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57361/M
+// URL: https://ac.nowcoder.com/acm/contest/62977/L
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -66,38 +66,59 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
-#include <cmath>
+#include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
-// #include <vector>
+#include <vector>
 // #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 2e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
+vector<int> g[N];
+int dp[N];
 
 inline void Solution()
 {
-    ll n, cnt, num = 1, ans = 0;
+    int n;
     scanf("%d", &n);
-    cnt = log10(n);
-    for (int i = 1; i <= cnt; i++)
+
+    ll a[n];
+    for (int i = 0; i < n; i++)
     {
-        num *= 10;
-        ans += (num - num / 10) * i;
+        scanf("%lld", &a[i]);
     }
-    ans += (n - num + 1) * (cnt + 1);
-    printf("%d\n", ans);
+    sort(a, a + n);
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i; j < n; j++)
+        {
+            if (a[j] == a[j - 1])
+            {
+                continue;
+            }
+            else if (a[i] * 10 <= a[j])
+            {
+                break;
+            }
+            else if ((a[i] ^ a[j]) == 2 * (a[i] & a[j]))
+            {
+                printf("%d %d\n", i, j);
+                return;
+            }
+        }
+    }
+    printf("-1\n");
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    scanf("%d", &T);
+    // scanf("%d", &T);
     while (T--)
     {
         Solution();

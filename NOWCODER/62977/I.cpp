@@ -1,6 +1,6 @@
-// Problem: Writing Books
+// Problem: 双指针
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57361/M
+// URL: https://ac.nowcoder.com/acm/contest/62977/I
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,36 +38,12 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
-
-/*
-                   _ooOoo_
-                  o8888888o
-                  88" . "88
-                  (| -_- |)
-                  O\  =  /O
-               ____/`---'\____
-             .'  \\|     |//  `.
-            /  \\|||  :  |||//  \
-           /  _||||| -:- |||||-  \
-           |   | \\\  -  /// |   |
-           | \_|  ''\---/''  |   |
-           \  .-\__  `-`  ___/-. /
-         ___`. .'  /--.--\  `. . __
-      ."" '<  `.___\_<|>_/___.'  >'"".
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-     \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-'======
-                   `=---='
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         佛祖保佑       永无BUG
-*/
-
-// #include <bits/stdc++.h>
-#include <cstdio>
+#include <bits/stdc++.h>
+// #include <cstdio>
 // #include <iostream>
 // #include <cstring>
 // #include <algorithm>
-#include <cmath>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -77,21 +53,26 @@
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 2e5 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
 inline void Solution()
 {
-    ll n, cnt, num = 1, ans = 0;
-    scanf("%d", &n);
-    cnt = log10(n);
-    for (int i = 1; i <= cnt; i++)
+    int n;
+    cin >> n;
+    vector<int> a(n + 1), div;
+    map<double, int> cnt;
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    ll res = 0;
+    for (int i = 1; i <= n; i++)
     {
-        num *= 10;
-        ans += (num - num / 10) * i;
+        int b;
+        cin >> b;
+        res += cnt[1.0 * b / a[i]];
+        cnt[1.0 * a[i] / b]++;
     }
-    ans += (n - num + 1) * (cnt + 1);
-    printf("%d\n", ans);
+    cout << res << endl;
 }
 
 int main(int argc, char const *argv[])

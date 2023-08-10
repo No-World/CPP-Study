@@ -1,6 +1,6 @@
-// Problem: Writing Books
+// Problem: Kruskal
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57361/M
+// URL: https://ac.nowcoder.com/acm/contest/62977/G
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -38,36 +38,12 @@
 ⣿⣿⣿⣿⣦⡙⣿⣆⢻⡌⢿⣶⢤⣉⣙⣿⣷⡀⠙⠽⠷⠄⠹⣿⣟⣿⣆⢙⣋⣤⣤⣤⣄⣀⢀⢀⢀⢀⣾⣿⣟⡷⣯⡿⢃⣼⣿⣿⣿⠇⣼⡟⣡⣿⣿⣿⢀⡿⢠⠈⣿
 ⣿⣿⣿⣿⣿⣷⣮⣿⣿⣿⡌⠁⢤⣤⣤⣤⣬⣭⣴⣶⣶⣶⣆⠈⢻⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣷⣶⣤⣌⣉⡘⠛⠻⠶⣿⣿⣿⣿⡟⣰⣫⣴⣿⣿⣿⣿⠄⣷⣿⣿⣿
 */
-
-/*
-                   _ooOoo_
-                  o8888888o
-                  88" . "88
-                  (| -_- |)
-                  O\  =  /O
-               ____/`---'\____
-             .'  \\|     |//  `.
-            /  \\|||  :  |||//  \
-           /  _||||| -:- |||||-  \
-           |   | \\\  -  /// |   |
-           | \_|  ''\---/''  |   |
-           \  .-\__  `-`  ___/-. /
-         ___`. .'  /--.--\  `. . __
-      ."" '<  `.___\_<|>_/___.'  >'"".
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-     \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-'======
-                   `=---='
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         佛祖保佑       永无BUG
-*/
-
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
 // #include <algorithm>
-#include <cmath>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -75,23 +51,23 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
 inline void Solution()
 {
-    ll n, cnt, num = 1, ans = 0;
+    int n;
     scanf("%d", &n);
-    cnt = log10(n);
-    for (int i = 1; i <= cnt; i++)
+    if ((n + 1) & n)
     {
-        num *= 10;
-        ans += (num - num / 10) * i;
+        printf("0\n");
     }
-    ans += (n - num + 1) * (cnt + 1);
-    printf("%d\n", ans);
+    else
+    {
+        printf("1\n");
+    }
 }
 
 int main(int argc, char const *argv[])
