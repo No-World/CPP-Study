@@ -78,15 +78,15 @@ inline void Solution()
 
 int main(int argc, char const *argv[])
 {
-  int T = 1;
-  // std::ios::sync_with_stdio(false);
-  // std::cin.tie(nullptr);
-  // std::cout.tie(nullptr);
-  // cin >> T;
-  // scanf("%d", &T);
-  while (T--)
-  {
-    Solution();
-  }
-  return 0;
+    int T = 1;
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
+    // cin >> T;
+    // scanf("%d", &T);
+    while (T--)
+    {
+        Solution();
+    }
+    return 0;
 }
