@@ -1,6 +1,6 @@
-// Problem: Writing Books
+// Problem: 小美的元素删除
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/57361/M
+// URL: https://ac.nowcoder.com/acm/contest/64593/D
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -66,8 +66,8 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-// #include <algorithm>
-#include <cmath>
+#include <algorithm>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -77,27 +77,50 @@
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, MOD = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__;
+
+int a[N], dp[N][N];
 
 inline void Solution()
 {
-    ll n, cnt, num = 1, ans = 0;
-    scanf("%d", &n);
-    cnt = log10(n);
-    for (int i = 1; i <= cnt; i++)
+    int n, m;
+    scanf("%d%d", &n, &m);
+    m = n - m;
+    for (int i = 1; i <= n; i++)
     {
-        num *= 10;
-        ans += (num - num / 10) * i;
+        scanf("%d", &a[i]);
+        dp[i][1] = 1;
     }
-    ans += (n - num + 1) * (cnt + 1);
-    printf("%d\n", ans);
+    sort(a + 1, a + n + 1);
+    ll res = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j < i; j++)
+        {
+            if (a[i] % a[j])
+            {
+                continue;
+            }
+            for (int k = 2; k <= m; k++)
+            {
+                dp[i][k] += dp[j][k - 1];
+                dp[i][k] %= MOD;
+            }
+        }
+        res = (res + dp[i][m]) % MOD;
+    }
+    printf("%d\n", res);
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    scanf("%d", &T);
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
+    // cin >> T;
+    // scanf("%d", &T);
     while (T--)
     {
         Solution();
