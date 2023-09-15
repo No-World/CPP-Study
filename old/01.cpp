@@ -1,6 +1,6 @@
-// Problem: 小美的元素删除
+// Problem: 第K小表示数
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/64593/D
+// URL: https://ac.nowcoder.com/acm/contest/65157/C
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -70,47 +70,39 @@
 // #include <cmath>
 // #include <queue>
 // #include <map>
-// #include <vector>
+#include <vector>
 // #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10, MOD = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-int a[N], dp[N][N];
+vector<ll> x;
 
 inline void Solution()
 {
-    int n, m;
-    scanf("%d%d", &n, &m);
-    m = n - m;
-    for (int i = 1; i <= n; i++)
+    ll k, a, b;
+    scanf("%lld%lld%lld", &k, &a, &b);
+    if (a > b)
     {
-        scanf("%d", &a[i]);
-        dp[i][1] = 1;
+        swap(a, b);
     }
-    sort(a + 1, a + n + 1);
-    ll res = 0;
-    for (int i = 1; i <= n; i++)
+    if ((b % a) == 0)
     {
-        for (int j = 1; j < i; j++)
-        {
-            if (a[i] % a[j])
-            {
-                continue;
-            }
-            for (int k = 2; k <= m; k++)
-            {
-                dp[i][k] += dp[j][k - 1];
-                dp[i][k] %= MOD;
-            }
-        }
-        res = (res + dp[i][m]) % MOD;
+        printf("%lld\n", a * k);
+        return;
     }
-    printf("%d\n", res);
+    x.push_back(a), x.push_back(b);
+    while (--k)
+    {
+        x.push_back(x[0] + a), x.push_back(x[0] + b);
+        x.erase(x.begin());
+        sort(x.begin(), x.end());
+    }
+    printf("%lld\n", x[0]);
 }
 
 int main(int argc, char const *argv[])
