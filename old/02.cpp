@@ -1,3 +1,11 @@
+// Problem: D. Divide and Equalize
+// Contest: Codeforces - Codeforces Round 903 (Div. 3)
+// URL: https://codeforces.com/contest/1881/problem/D
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -57,78 +65,75 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
-#include <algorithm>
+#include <cstring>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
-#include <map>
+// #include <map>
 // #include <vector>
 // #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e6 + 10;
 // const ll INF = __LONG_LONG_MAX__;
 
-ll fa[N], num[N];
-map<int, ll> mp;
+bool p[N];
+int pr[N];
+int prn[N];
 
-inline ll find(ll x)
+void Euler()
 {
-    return fa[x] == x ? x : fa[x] = find(fa[x]);
-}
-
-inline void merge(ll x, ll y)
-{
-    x = find(x), y = find(y);
-    fa[x] = y;
-}
-
-inline void init(ll x)
-{
-    for (ll i = 1; i <= x; i++)
+    int cnt = 0;
+    p[0] = p[1] = true; // 特例
+    for (int i = 2; i < N; ++i)
     {
-        fa[i] = i;
+        if (!p[i])
+            pr[cnt++] = i; // 选出素数
+        for (int j = 0; j < cnt && pr[j] * i < N; ++j)
+        {
+            p[pr[j] * i] = true; // 筛出非素数
+            if (i % pr[j] == 0)
+                break; // 重复筛选,跳出循环
+        }
     }
 }
 
 inline void Solution()
 {
-    int m, n, cnt = 0;
-    ll ans = 0;
-    scanf("%d%d", &n, &m);
-    init(n);
-    for (int i = 0; i < m; i++)
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
     {
-        ll a, b;
-        scanf("%lld%lld", &a, &b);
-        merge(a, b);
+        int x;
+        scanf("%d", &x);
+        for (int j = 0; x; j++)
+        {
+            if (x % pr[j] == 0)
+            {
+                prn[j]++;
+                x /= pr[j];
+            }
+            x++;
+        }
     }
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i < N && pr[i]; i++)
     {
-        mp[find(i)]++;
+        if (prn[i] % n != 0)
+        {
+            printf("NO\n");
+            return;
+        }
     }
-    for (auto x : mp)
-    {
-        num[cnt] = x.second;
-        cnt++;
-    }
-    sort(num, num + cnt);
-    for (int i = 0; i < cnt; i++)
-    {
-        ans += num[i] * (num[i] - 1) / 2;
-    }
-    if (ans == m)
-    {
-        ans += num[0] * num[1];
-    }
-    printf("%lld\n", ans - m);
+    printf("YES\n");
+    memset(prn, 0, sizeof(prn));
 }
 
 int main(int argc, char const *argv[])
 {
+    Euler();
     int T = 1;
     // std::ios::sync_with_stdio(false);
     // std::cin.tie(nullptr);

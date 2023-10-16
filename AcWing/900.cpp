@@ -1,6 +1,6 @@
-// Problem: 最短编辑距离
+// Problem: 整数划分
 // Contest: AcWing
-// URL: https://www.acwing.com/problem/content/904/
+// URL: https://www.acwing.com/problem/content/902/
 // Memory Limit: 64 MB
 // Time Limit: 1000 ms
 //
@@ -66,7 +66,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -75,43 +75,25 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10;
-// const ll INF = __LONG_LONG_MAX__;
+const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
-char a[N], b[N];
-int dp[N][N];
+ll dp[N] = {1};
 
 inline void Solution()
 {
-    int n, m;
-    scanf("%d%s", &n, a + 1);
-    scanf("%d%s", &m, b + 1);
+    int n;
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
-        dp[i][0] = i;
-    }
-    for (int i = 1; i <= m; i++)
-    {
-        dp[0][i] = i;
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= m; j++)
+        for (int j = i; j <= n; j++)
         {
-            dp[i][j] = min(dp[i][j - 1] + 1, dp[i - 1][j] + 1);
-            if (a[i] == b[j])
-            {
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1]);
-            }
-            else
-            {
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + 1);
-            }
+            dp[j] = (dp[j] + dp[j - i]) % MOD;
         }
     }
-    printf("%d\n", dp[n][m]);
+    printf("%d\n", dp[n]);
 }
 
 int main(int argc, char const *argv[])

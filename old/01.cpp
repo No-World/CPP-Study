@@ -1,25 +1,27 @@
 #include <iostream>
-
+#include <string>
+using namespace std;
+bool is(string s, string t)
+{
+    if (s.size() != t.size())
+        return false;
+    for (int i = 0; i < s.size(); i++)
+        if (s[i] != t[i] && s[i] != '?')
+            return false;
+    return true;
+}
 int main()
 {
-    int num1, num2, num3;
-
-    // 从键盘输入三个不同的正整数
-    std::cin >> num1;
-
-    std::cin >> num2;
-
-    std::cin >> num3;
-
-    // 计算和、平均值、积、最小值和最大值
-    int sum = num1 + num2 + num3;
-    int average = static_cast<double>(sum) / 3;
-    int product = num1 * num2 * num3;
-    int minNum = std::min(std::min(num1, num2), num3);
-    int maxNum = std::max(std::max(num1, num2), num3);
-
-    // 输出结果在一行
-    std::cout << sum << " " << average << " " << product << " " << minNum << " " << maxNum << std::endl;
-
-    return 0;
+    string s, t = "", tt = "";
+    cin >> s;
+    for (int i = 0; i < s.size(); i++)
+        t += char('0' + i % 2 * 2), tt += ('0' + (i + 1) % 2 * 2);
+    string c[7] = {"1", "12", "21", "101", "121", t, tt};
+    for (int i = 0; i < 7; i++)
+        if (is(s, c[i]))
+        {
+            cout << c[i] << endl;
+            return 0;
+        }
+    cout << -1 << endl;
 }

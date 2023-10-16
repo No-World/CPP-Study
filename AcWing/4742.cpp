@@ -1,8 +1,8 @@
-// Problem: 最短编辑距离
+// Problem: 电
 // Contest: AcWing
-// URL: https://www.acwing.com/problem/content/904/
-// Memory Limit: 64 MB
-// Time Limit: 1000 ms
+// URL: https://www.acwing.com/problem/content/4745/
+// Memory Limit: 256 MB
+// Time Limit: 3000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
 
@@ -65,7 +65,7 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
+#include <cstring>
 #include <algorithm>
 // #include <cmath>
 // #include <queue>
@@ -77,41 +77,34 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10;
+const int inf = 0x3f3f3f3f, N = 2e5 + 10, M = N * 2;
 // const ll INF = __LONG_LONG_MAX__;
 
-char a[N], b[N];
-int dp[N][N];
+int h[N], e[M], ne[M], w[N], f[N], idx;
+
+inline void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
 
 inline void Solution()
 {
-    int n, m;
-    scanf("%d%s", &n, a + 1);
-    scanf("%d%s", &m, b + 1);
+    int n;
+    scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
-        dp[i][0] = i;
+        scanf("%d", &w[i]);
     }
-    for (int i = 1; i <= m; i++)
+    memset(h, -1, (n + 1) * 4);
+    idx = 0;
+    for (int i = 0; i < n; i++)
     {
-        dp[0][i] = i;
+        int a, b;
+        scanf("%d%d", &a, &b);
+        add(a, b), add(b, a);
     }
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= m; j++)
-        {
-            dp[i][j] = min(dp[i][j - 1] + 1, dp[i - 1][j] + 1);
-            if (a[i] == b[j])
-            {
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1]);
-            }
-            else
-            {
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + 1);
-            }
-        }
-    }
-    printf("%d\n", dp[n][m]);
+    memset(f, -1, (n + 1) * 4);
+    int res = 0;
 }
 
 int main(int argc, char const *argv[])
@@ -121,7 +114,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     while (T--)
     {
         Solution();
