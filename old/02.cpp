@@ -1,6 +1,6 @@
-// Problem: D. Divide and Equalize
+// Problem: E. Block Sequence
 // Contest: Codeforces - Codeforces Round 903 (Div. 3)
-// URL: https://codeforces.com/contest/1881/problem/D
+// URL: https://codeforces.com/contest/1881/problem/E
 // Memory Limit: 256 MB
 // Time Limit: 2000 ms
 //
@@ -65,7 +65,7 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-#include <cstring>
+// #include <cstring>
 // #include <algorithm>
 // #include <cmath>
 // #include <queue>
@@ -77,72 +77,24 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e6 + 10;
-// const ll INF = __LONG_LONG_MAX__;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD;
 
-bool p[N];
-int pr[N];
-int prn[N];
-
-void Euler()
+inline void Solution(int T)
 {
-    int cnt = 0;
-    p[0] = p[1] = true; // 特例
-    for (int i = 2; i < N; ++i)
-    {
-        if (!p[i])
-            pr[cnt++] = i; // 选出素数
-        for (int j = 0; j < cnt && pr[j] * i < N; ++j)
-        {
-            p[pr[j] * i] = true; // 筛出非素数
-            if (i % pr[j] == 0)
-                break; // 重复筛选,跳出循环
-        }
-    }
-}
-
-inline void Solution()
-{
-    int n;
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        scanf("%d", &x);
-        for (int j = 0; x; j++)
-        {
-            if (x % pr[j] == 0)
-            {
-                prn[j]++;
-                x /= pr[j];
-            }
-            x++;
-        }
-    }
-    for (int i = 0; i < N && pr[i]; i++)
-    {
-        if (prn[i] % n != 0)
-        {
-            printf("NO\n");
-            return;
-        }
-    }
-    printf("YES\n");
-    memset(prn, 0, sizeof(prn));
 }
 
 int main(int argc, char const *argv[])
 {
-    Euler();
     int T = 1;
     // std::ios::sync_with_stdio(false);
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
     // scanf("%d", &T);
-    while (T--)
+    for (int i = 0; i < T; i++)
     {
-        Solution();
+        Solution(i);
     }
     return 0;
 }

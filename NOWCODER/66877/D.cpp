@@ -1,6 +1,6 @@
-// Problem: mex和gcd的乘积
+// Problem: 2^20
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/66877/C
+// URL: https://ac.nowcoder.com/acm/contest/66877/D
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -66,7 +66,7 @@
 #include <cstdio>
 // #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -77,42 +77,29 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1048576;
 // const ll INF = __LONG_LONG_MAX__, MOD;
-
-bool st[N];
-int a[N];
 
 inline void Solution(int T)
 {
-    int n, mx = 0, flag = 0;
+    int n, flag = 1, ans = 20;
     scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i <= 20; i++)
     {
-        scanf("%d", &a[i]);
-        st[a[i]] = 1;
-    }
-    for (int i = 0; i <= n; i++)
-    {
-        if (!st[i])
+        long long cnt = i, y = n + i;
+        while (y % mod != 0)
         {
-            mx = i;
-            break;
+            y *= 2;
+            cnt++;
+        }
+        if (cnt < ans)
+        {
+            ans = cnt;
         }
     }
-    if (mx == 1)
-    {
-        mx = 0;
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        if (!a[i])
-        {
-            mx = max({mx, a[i - 1], a[i + 1]});
-        }
-    }
-    printf("%d\n", mx);
+    printf("%d\n", ans);
 }
+
 int main(int argc, char const *argv[])
 {
     int T = 1;
@@ -120,7 +107,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {
         Solution(i);

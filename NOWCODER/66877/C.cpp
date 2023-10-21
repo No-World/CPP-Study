@@ -80,39 +80,45 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
-bool st[N];
-int a[N];
+bool f[N];
+int y[N];
 
 inline void Solution(int T)
 {
-    int n, mx = 0, flag = 0;
+    int n, num = -1, mx = 0, flag = 0;
     scanf("%d", &n);
     for (int i = 1; i <= n; i++)
     {
-        scanf("%d", &a[i]);
-        st[a[i]] = 1;
+        scanf("%d", &y[i]);
+        f[y[i]] = 1;
+        if (y[i])
+        {
+            flag = 1;
+        }
     }
     for (int i = 0; i <= n; i++)
     {
-        if (!st[i])
+        if (!f[i])
         {
             mx = i;
             break;
         }
     }
-    if (mx == 1)
-    {
-        mx = 0;
-    }
     for (int i = 1; i <= n; i++)
     {
-        if (!a[i])
+        if (!y[i])
         {
-            mx = max({mx, a[i - 1], a[i + 1]});
+            mx = max({mx, y[i - 1], y[i + 1]});
         }
     }
-    printf("%d\n", mx);
+    if (flag)
+    {
+        printf("%d\n", mx);
+        return;
+    }
+    printf("0\n");
 }
+
 int main(int argc, char const *argv[])
 {
     int T = 1;

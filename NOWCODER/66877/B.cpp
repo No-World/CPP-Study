@@ -1,6 +1,6 @@
-// Problem: mex和gcd的乘积
+// Problem: 灵异背包？
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/66877/C
+// URL: https://ac.nowcoder.com/acm/contest/66877/B
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -80,39 +80,30 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
-bool st[N];
 int a[N];
 
 inline void Solution(int T)
 {
-    int n, mx = 0, flag = 0;
+    int ans = 0, n, num = 0, mn = inf;
     scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
         scanf("%d", &a[i]);
-        st[a[i]] = 1;
-    }
-    for (int i = 0; i <= n; i++)
-    {
-        if (!st[i])
+        ans += a[i];
+        if (a[i] % 2 == 1)
         {
-            mx = i;
-            break;
+            num++;
+            mn = min(mn, a[i]);
         }
     }
-    if (mx == 1)
+    if (num % 2 == 0)
     {
-        mx = 0;
+        printf("%d\n", ans);
+        return;
     }
-    for (int i = 1; i <= n; i++)
-    {
-        if (!a[i])
-        {
-            mx = max({mx, a[i - 1], a[i + 1]});
-        }
-    }
-    printf("%d\n", mx);
+    printf("%d\n", ans - mn);
 }
+
 int main(int argc, char const *argv[])
 {
     int T = 1;

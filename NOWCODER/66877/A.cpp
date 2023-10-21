@@ -1,6 +1,6 @@
-// Problem: mex和gcd的乘积
+// Problem: 数位dp？
 // Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/66877/C
+// URL: https://ac.nowcoder.com/acm/contest/66877/A
 // Memory Limit: 524288 MB
 // Time Limit: 2000 ms
 //
@@ -65,8 +65,8 @@
 // #include <bits/stdc++.h>
 #include <cstdio>
 // #include <iostream>
-// #include <cstring>
-#include <algorithm>
+#include <cstring>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -77,42 +77,26 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
-bool st[N];
-int a[N];
+char s[N];
 
 inline void Solution(int T)
 {
-    int n, mx = 0, flag = 0;
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
+    scanf("%s", s + 1);
+    int len = strlen(s + 1), ans = 0;
+    for (int i = len; i > 0; i--)
     {
-        scanf("%d", &a[i]);
-        st[a[i]] = 1;
-    }
-    for (int i = 0; i <= n; i++)
-    {
-        if (!st[i])
+        if ((s[i] - '0') % 2 == 0)
         {
-            mx = i;
             break;
         }
+        ans++;
     }
-    if (mx == 1)
-    {
-        mx = 0;
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        if (!a[i])
-        {
-            mx = max({mx, a[i - 1], a[i + 1]});
-        }
-    }
-    printf("%d\n", mx);
+    printf("%d", ans);
 }
+
 int main(int argc, char const *argv[])
 {
     int T = 1;
