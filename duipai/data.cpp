@@ -2,7 +2,7 @@
 #include <cstdlib> //必要头文件
 #include <cstdio>
 #include <iostream>
-#define MAXN 1000
+#define MAXN 1000aw
 using namespace std;
 
 typedef long long ll;
@@ -22,13 +22,8 @@ double random3(int n)
 int main()
 {
     srand((unsigned)time(NULL));
-    int n = random1(1e5) + 1;
+    int n = random1(1e15) + 1;
     printf("%d\n", n);
-    for (int i = 0; i < n; i++)
-    {
-        printf("%d ", random1(n + 1) + 1);
-    }
-    printf("\n");
 
     return 0;
 }

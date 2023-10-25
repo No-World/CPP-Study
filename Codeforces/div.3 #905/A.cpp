@@ -1,3 +1,11 @@
+// Problem: A. Morning
+// Contest: Codeforces - Codeforces Round 905 (Div. 3)
+// URL: https://codeforces.com/contest/1883/problem/A
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -55,6 +63,7 @@
 */
 
 // #include <bits/stdc++.h>
+// #include <cstdio>
 #include <iostream>
 // #include <cstring>
 // #include <algorithm>
@@ -73,6 +82,26 @@ const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 
 inline void Solution(int T)
 {
+    string s;
+    int ans = 4, num = '1';
+    cin >> s;
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (s[i] == '0')
+        {
+            s[i] += 10;
+        }
+        if (s[i] >= num)
+        {
+            ans += s[i] - num;
+        }
+        else
+        {
+            ans += num - s[i];
+        }
+        num = s[i];
+    }
+    cout << ans << '\n';
 }
 
 int main(int argc, char const *argv[])
@@ -81,7 +110,7 @@ int main(int argc, char const *argv[])
     // std::ios::sync_with_stdio(false);
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
-    // cin >> T;
+    cin >> T;
     // scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {

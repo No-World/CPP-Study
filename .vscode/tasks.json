@@ -18,7 +18,7 @@
                 "$gcc"
             ],
             "group": {
-                "kind": "build",
+                "kind": "test",
                 "isDefault": true
             },
             "detail": "调试器生成的任务。"

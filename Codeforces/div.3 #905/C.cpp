@@ -1,3 +1,11 @@
+// Problem: C. Raspberries
+// Contest: Codeforces - Codeforces Round 905 (Div. 3)
+// URL: https://codeforces.com/contest/1883/problem/C
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -57,7 +65,7 @@
 // #include <bits/stdc++.h>
 #include <iostream>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -68,11 +76,41 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
+
+int a[N];
+
+inline int check(int n, int k, int num)
+{
+    int b[N], ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        b[i] = k - a[i] % k;
+        b[i] = (b[i] == k) ? 0 : b[i];
+    }
+    sort(b, b + n);
+    for (int i = 0; i < num; i++)
+    {
+        ans += b[i];
+    }
+    return ans;
+}
 
 inline void Solution(int T)
 {
+    int n, k, mn = inf;
+    scanf("%d%d", &n, &k);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+    mn = min(check(n, k, 1), mn);
+    if (k == 4)
+    {
+        mn = min(check(n, 2, 2), mn);
+    }
+    printf("%d\n", mn);
 }
 
 int main(int argc, char const *argv[])
@@ -82,7 +120,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {
         Solution(i);

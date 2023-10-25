@@ -1,11 +1,3 @@
-// Problem: B. Fear of the Dark
-// Contest: Codeforces - Educational Codeforces Round 156 (Rated for Div. 2)
-// URL: https://codeforces.com/contest/1886/problem/B
-// Memory Limit: 256 MB
-// Time Limit: 2000 ms
-//
-// Powered by CP Editor (https://cpeditor.org)
-
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -63,11 +55,10 @@
 */
 
 // #include <bits/stdc++.h>
-#include <cstdio>
-// #include <iostream>
+#include <iostream>
 // #include <cstring>
 #include <algorithm>
-#include <cmath>
+// #include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -75,32 +66,18 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-// typedef long long ll;
+typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e6 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
+
+ll dp[N];
 
 inline void Solution(int T)
 {
-    double px, py, ax, ay, bx, by;
-    scanf("%lf%lf%lf%lf%lf%lf", &px, &py, &ax, &ay, &bx, &by);
-    double bp, op, ap, ob, oa, ab;
-    op = sqrt(px * px + py * py);
-    ob = sqrt(bx * bx + by * by);
-    oa = sqrt(ax * ax + ay * ay);
-    bp = sqrt((bx - px) * (bx - px) + (by - py) * (by - py));
-    ap = sqrt((ax - px) * (ax - px) + (ay - py) * (ay - py));
-    ab = sqrt((ax - bx) * (ax - bx) + (ay - by) * (ay - by));
-    double num = min(max(oa, ap), max(ob, bp));
-    if ((oa * 2 <= ab && bp * 2 <= ab) || (ob * 2 <= ab && ap * 2 <= ab))
-    {
-        num = min(num, ab / 2);
-        printf("%.10lf\n", num);
-        return;
-    }
-    double mn = min(max(oa, bp), max(ob, ap));
-    num = min(mn, num);
-    printf("%.10lf\n", num);
+    ll n, ans = 0;
+    scanf("%lld", &n);
+    int sum = 1e9;
 }
 
 int main(int argc, char const *argv[])
@@ -110,7 +87,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    scanf("%d", &T);
+    // scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {
         Solution(i);
