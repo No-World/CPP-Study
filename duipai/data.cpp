@@ -22,8 +22,17 @@ double random3(int n)
 int main()
 {
     srand((unsigned)time(NULL));
-    int n = random1(1e15) + 1;
-    printf("%d\n", n);
+    int n = random1(1e1) + 1, m = random1(1e1) + 1;
+    printf("%d %d\n", n, m);
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", random1(1e4) + 1);
+    }
+    printf("\n");
+    for (int i = 0; i < m; i++)
+    {
+        printf("%d ", random1(1e4) + 1);
+    }
 
     return 0;
 }

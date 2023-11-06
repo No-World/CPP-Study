@@ -1,3 +1,11 @@
+// Problem: P2678 [NOIP2015 提高组] 跳石头
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P2678
+// Memory Limit: 128 MB
+// Time Limit: 1000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -66,18 +74,35 @@
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e6 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
-ll dp[N];
-
+int a[N][N], dp[N][N];
 inline void Solution(int T)
 {
-    ll n, ans = 0;
-    scanf("%lld", &n);
-    int sum = 1e9;
+    int x, y, ans = 0;
+    scanf("%d%d", &x, &y);
+    for (int i = 1; i <= x; i++)
+    {
+        for (int j = 1; j <= y; j++)
+        {
+            scanf("%d", &a[i][j]);
+        }
+    }
+    for (int i = 1; i <= x; i++)
+    {
+        for (int j = 1; j <= y; j++)
+        {
+            if (a[i][j])
+            {
+                dp[i][j] = 1 + min({dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]});
+            }
+            ans = max(ans, dp[i][j]);
+        }
+    }
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])

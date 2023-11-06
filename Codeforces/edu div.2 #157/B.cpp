@@ -1,3 +1,11 @@
+// Problem: B. Points and Minimum Distance
+// Contest: Codeforces - Educational Codeforces Round 157 (Rated for Div. 2)
+// URL: https://codeforces.com/contest/1895/problem/B
+// Memory Limit: 512 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -58,7 +66,7 @@
 #include <iostream>
 // #include <cstring>
 #include <algorithm>
-// #include <cmath>
+#include <cmath>
 // #include <queue>
 // #include <map>
 // #include <vector>
@@ -68,49 +76,30 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
 int a[N];
 
 inline void Solution(int T)
 {
-    int n, q;
-    scanf("%d%d", &n, &q);
-    for (int i = 1; i <= n; i++)
+    int n, ans = 0;
+    scanf("%d", &n);
+    for (int i = 1; i <= n * 2; i++)
     {
         scanf("%d", &a[i]);
     }
-    sort(a + 1, a + n + 1);
-    while (q--)
+    sort(a + 1, a + 2 * n + 1);
+    int x = a[1], y = a[2 * n];
+    for (int i = 2; i <= n; i++)
     {
-        int x, l = 0, ll = 0, r = n, rr = n;
-        scanf("%d", &x);
-        while (l < r)
-        {
-            int mid = (l + r) >> 1;
-            if (a[mid] <= x)
-            {
-                l = mid + 1;
-            }
-            else
-            {
-                r = mid;
-            }
-        }
-        while (ll < rr)
-        {
-            int mid = (ll + rr + 1) >> 1;
-            if (a[mid] < x)
-            {
-                ll = mid;
-            }
-            else
-            {
-                rr = mid - 1;
-            }
-        }
-        printf("%d %d\n", rr, n - l + 1);
+        ans += abs(a[i] - x) + abs(a[2 * n - i + 1] - y);
+        x = a[i], y = a[2 * n - i + 1];
+    }
+    printf("%d\n", ans);
+    for (int i = 1; i <= n; i++)
+    {
+        printf("%d %d\n", a[i], a[2 * n - i + 1]);
     }
 }
 
@@ -121,7 +110,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {
         Solution(i);

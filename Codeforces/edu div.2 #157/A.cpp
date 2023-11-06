@@ -1,3 +1,11 @@
+// Problem: A. Treasure Chest
+// Contest: Codeforces - Educational Codeforces Round 157 (Rated for Div. 2)
+// URL: https://codeforces.com/contest/1895/problem/A
+// Memory Limit: 512 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -57,7 +65,7 @@
 // #include <bits/stdc++.h>
 #include <iostream>
 // #include <cstring>
-#include <algorithm>
+// #include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -68,49 +76,24 @@
 // #include <cstdlib>
 // typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 1e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
-
-int a[N];
 
 inline void Solution(int T)
 {
-    int n, q;
-    scanf("%d%d", &n, &q);
-    for (int i = 1; i <= n; i++)
+    int x, y, k;
+    scanf("%d%d%d", &x, &y, &k);
+    if (x < y && y - x <= k)
     {
-        scanf("%d", &a[i]);
+        printf("%d\n", y);
     }
-    sort(a + 1, a + n + 1);
-    while (q--)
+    else if (y <= x)
     {
-        int x, l = 0, ll = 0, r = n, rr = n;
-        scanf("%d", &x);
-        while (l < r)
-        {
-            int mid = (l + r) >> 1;
-            if (a[mid] <= x)
-            {
-                l = mid + 1;
-            }
-            else
-            {
-                r = mid;
-            }
-        }
-        while (ll < rr)
-        {
-            int mid = (ll + rr + 1) >> 1;
-            if (a[mid] < x)
-            {
-                ll = mid;
-            }
-            else
-            {
-                rr = mid - 1;
-            }
-        }
-        printf("%d %d\n", rr, n - l + 1);
+        printf("%d\n", x);
+    }
+    else
+    {
+        printf("%d\n", 2 * y - x - k);
     }
 }
 
@@ -121,7 +104,7 @@ int main(int argc, char const *argv[])
     // std::cin.tie(nullptr);
     // std::cout.tie(nullptr);
     // cin >> T;
-    // scanf("%d", &T);
+    scanf("%d", &T);
     for (int i = 0; i < T; i++)
     {
         Solution(i);
