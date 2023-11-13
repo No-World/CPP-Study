@@ -1,3 +1,11 @@
+// Problem: D. XOR Construction
+// Contest: Codeforces - Educational Codeforces Round 157 (Rated for Div. 2)
+// URL: https://codeforces.com/contest/1895/problem/D
+// Memory Limit: 512 MB
+// Time Limit: 2000 ms
+//
+// Powered by CP Editor (https://cpeditor.org)
+
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -71,16 +79,16 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD;
 
-void Solution(int T)
+inline void Solution(int T)
 {
 }
 
 int main(int argc, char const *argv[])
 {
     int T = 1;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
     // cin >> T;
     // scanf("%d", &T);
     for (int i = 0; i < T; i++)
