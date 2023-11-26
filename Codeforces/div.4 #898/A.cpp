@@ -1,6 +1,6 @@
-// Problem: B. Milena and Admirer
-// Contest: Codeforces - Codeforces Round 910 (Div. 2)
-// URL: https://codeforces.com/contest/1898/problem/B
+// Problem: A. Short Sort
+// Contest: Codeforces - Codeforces Round 898 (Div. 4)
+// URL: https://codeforces.com/contest/1873/problem/A
 // Memory Limit: 256 MB
 // Time Limit: 1000 ms
 //
@@ -70,51 +70,48 @@
 // #include <queue>
 // #include <map>
 // #include <vector>
-#include <stack>
+// #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
-// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD;
 
-ll a[N];
+string S = "abc";
 
-void Solution(int __T)
+void Solution(int T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
-    for (int i = 1; i <= n; i++)
+    string s;
+    int num = 0;
+    cin >> s;
+    for (int i = 0; i < 3; i++)
     {
-        scanf("%lld", &a[i]);
-    }
-    mx = a[n];
-    while (--n)
-    {
-        if (a[n] > mx)
+        if (s[i] != S[i])
         {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
-        }
-        else
-        {
-            mx = a[n];
+            num++;
         }
     }
-    printf("%lld\n", num);
+    if (num % 2 != 0)
+    {
+        cout << "NO\n";
+    }
+    else
+    {
+        cout << "YES\n";
+    }
 }
 
 int main(int argc, char const *argv[])
 {
-    int __T = 1;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    // cin >> __T;
-    scanf("%d", &__T);
-    for (int i = 0; i < __T; i++)
+    int T = 1;
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
+    // cin >> T;
+    scanf("%d", &T);
+    for (int i = 0; i < T; i++)
     {
         Solution(i);
     }

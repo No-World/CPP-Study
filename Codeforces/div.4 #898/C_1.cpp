@@ -1,10 +1,11 @@
-// Problem: B. Milena and Admirer
-// Contest: Codeforces - Codeforces Round 910 (Div. 2)
-// URL: https://codeforces.com/contest/1898/problem/B
+// Problem: C. Target Practice
+// Contest: Codeforces - div4
+// URL: https://codeforces.com/contest/1873/problem/C
 // Memory Limit: 256 MB
 // Time Limit: 1000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
+// 时间优化版本
 
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
@@ -70,51 +71,58 @@
 // #include <queue>
 // #include <map>
 // #include <vector>
-#include <stack>
+// #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
-// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD;
 
-ll a[N];
+char a[20][20];
 
-void Solution(int __T)
+void Solution(int T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
-    for (int i = 1; i <= n; i++)
+    int ans = 0;
+    for (int i = 1; i < 11; i++)
     {
-        scanf("%lld", &a[i]);
+        scanf("%s", a[i] + 1);
     }
-    mx = a[n];
-    while (--n)
+    for (int i = 1; i < 6; i++)
     {
-        if (a[n] > mx)
+        for (int j = 1; j < 6; j++)
         {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
-        }
-        else
-        {
-            mx = a[n];
+            if (a[i][j] == 'X')
+            {
+                ans += min(i, j);
+            }
+            if (a[i][11 - j] == 'X')
+            {
+                ans += min(i, j);
+            }
+            if (a[11 - i][j] == 'X')
+            {
+                ans += min(i, j);
+            }
+            if (a[11 - i][11 - j] == 'X')
+            {
+                ans += min(i, j);
+            }
         }
     }
-    printf("%lld\n", num);
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
-    int __T = 1;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    // cin >> __T;
-    scanf("%d", &__T);
-    for (int i = 0; i < __T; i++)
+    int T = 1;
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
+    // cin >> T;
+    scanf("%d", &T);
+    for (int i = 0; i < T; i++)
     {
         Solution(i);
     }

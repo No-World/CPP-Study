@@ -1,11 +1,3 @@
-// Problem: B. Milena and Admirer
-// Contest: Codeforces - Codeforces Round 910 (Div. 2)
-// URL: https://codeforces.com/contest/1898/problem/B
-// Memory Limit: 256 MB
-// Time Limit: 1000 ms
-//
-// Powered by CP Editor (https://cpeditor.org)
-
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -67,43 +59,47 @@
 // #include <cstring>
 // #include <algorithm>
 // #include <cmath>
-// #include <queue>
+#include <queue>
 // #include <map>
 // #include <vector>
-#include <stack>
+// #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 3e5 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
-ll a[N];
+char s[N];
+
+struct TreeNode
+{
+    int l, r;
+} tree[N];
+
+int dfs(int root, int ans)
+{
+    if (!root)
+    {
+        return inf;
+    }
+    if (tree[root].l || tree[root].r)
+    {
+        return min(dfs(tree[root].l, ans + (s[root] != 'L')), dfs(tree[root].r, ans + (s[root] != 'R')));
+    }
+    return ans;
+}
 
 void Solution(int __T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
+    int n;
+    scanf("%d%s", &n, s + 1);
     for (int i = 1; i <= n; i++)
     {
-        scanf("%lld", &a[i]);
+        scanf("%d%d", &tree[i].l, &tree[i].r);
     }
-    mx = a[n];
-    while (--n)
-    {
-        if (a[n] > mx)
-        {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
-        }
-        else
-        {
-            mx = a[n];
-        }
-    }
-    printf("%lld\n", num);
+    printf("%d\n", dfs(1, 0));
 }
 
 int main(int argc, char const *argv[])

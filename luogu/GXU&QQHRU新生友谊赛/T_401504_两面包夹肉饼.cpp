@@ -1,11 +1,3 @@
-// Problem: B. Milena and Admirer
-// Contest: Codeforces - Codeforces Round 910 (Div. 2)
-// URL: https://codeforces.com/contest/1898/problem/B
-// Memory Limit: 256 MB
-// Time Limit: 1000 ms
-//
-// Powered by CP Editor (https://cpeditor.org)
-
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣻⣽⡿⣿⣎⠙⣿⣞⣷⡌⢻⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⡄⠹⣿⣿⡆⠻⣿⣟⣯⡿⣽⡿⣿⣿⣿⣿⣽⡷⣯⣿⣿⣿⣿⣿⣿
@@ -70,40 +62,28 @@
 // #include <queue>
 // #include <map>
 // #include <vector>
-#include <stack>
+// #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
-
-ll a[N];
 
 void Solution(int __T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
-    for (int i = 1; i <= n; i++)
+    ll a, b, c;
+    scanf("%lld%lld%lld", &a, &b, &c);
+    if (c < a && c < b)
     {
-        scanf("%lld", &a[i]);
+        printf("0\n");
     }
-    mx = a[n];
-    while (--n)
+    else
     {
-        if (a[n] > mx)
-        {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
-        }
-        else
-        {
-            mx = a[n];
-        }
+        ll mx = max(c / a, c / b * 2 - 1);
+        printf("%lld\n", );
     }
-    printf("%lld\n", num);
 }
 
 int main(int argc, char const *argv[])

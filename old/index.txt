@@ -1,0 +1,63 @@
+美学与人生(04015002_01)
+
+fetch("http://111.43.36.164/student/courseSelect/selectCourse/checkInputCodeAndSubmit",
+{
+    "headers": {
+        "accept": "application/json, text/javascript, */*; q=0.01",
+        "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "x-requested-with": "XMLHttpRequest"
+    },
+    "referrer": "http://111.43.36.164/student/courseSelect/courseSelect/index",
+    "referrerPolicy": "strict-origin-when-cross-origin",
+    "body": "dealType=3&kcIds=04015002%4001%402023-2024-2-1&kcms=32654%2C23398%2C19982%2C20154%2C29983%2C40%2C48%2C52%2C48%2C49%2C53%2C48%2C48%2C50%2C64%2C48%2C49%2C41%2C&fajhh=6826&sj=0_0&searchtj=&kclbdm=&inputCode=&tokenValue=ea6e32ff056a042804ec85a463d03a45",
+    "method": "POST",
+    "mode": "cors",
+    "credentials": "include"
+});
+
+请求标头:
+POST /student/courseSelect/selectCourse/checkInputCodeAndSubmit HTTP/1.1
+Accept: application/json, text/javascript, * /*; q=0.01
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Connection: keep-alive
+Content-Length: 248
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Cookie: 
+Host: 111.43.36.164
+Origin: http://111.43.36.164
+Referer: http://111.43.36.164/student/courseSelect/courseSelect/index
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0
+X-Requested-With: XMLHttpRequest
+
+艺术与审美(04115011_01)
+
+fetch("http://111.43.36.164/student/courseSelect/selectCourse/checkInputCodeAndSubmit",
+{
+    "headers": {
+        "accept": "application/json, text/javascript, */*; q=0.01","accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+"content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+"x-requested-with": "XMLHttpRequest"
+},
+"referrer": "http://111.43.36.164/student/courseSelect/courseSelect/index",
+"referrerPolicy": "strict-origin-when-cross-origin",
+"body": "dealType=3&kcIds=04115011%4001%402023-2024-2-1&kcms=33402%2C26415%2C19982%2C23457%2C32654%2C40%2C48%2C52%2C49%2C49%2C53%2C48%2C49%2C49%2C64%2C48%2C49%2C41%2C&fajhh=6826&sj=0_0&searchtj=&kclbdm=&inputCode=&tokenValue=d30b3af838ee7254f5a631bea591d376",
+"method": "POST",
+"mode": "cors",
+"credentials": "include"
+});
+请求标头：
+POST /student/courseSelect/selectCourse/checkInputCodeAndSubmit HTTP/1.1
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Connection: keep-alive
+Content-Length: 248
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Cookie: 
+Host: 111.43.36.164
+Origin: http://111.43.36.164
+Referer: http://111.43.36.164/student/courseSelect/courseSelect/index
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0
+X-Requested-With: XMLHttpRequest

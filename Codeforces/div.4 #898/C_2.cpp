@@ -1,10 +1,11 @@
-// Problem: B. Milena and Admirer
-// Contest: Codeforces - Codeforces Round 910 (Div. 2)
-// URL: https://codeforces.com/contest/1898/problem/B
+// Problem: C. Target Practice
+// Contest: Codeforces - div4
+// URL: https://codeforces.com/contest/1873/problem/C
 // Memory Limit: 256 MB
 // Time Limit: 1000 ms
 //
 // Powered by CP Editor (https://cpeditor.org)
+// 空间O(1)版本
 
 /*
 ⣿⣿⣿⣿⣿⣿⡷⣯⢿⣿⣷⣻⢯⣿⡽⣻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠸⣿⣿⣆⠹⣿⣿⢾⣟⣯⣿⣿⣿⣿⣿⣿⣽⣻⣿⣿⣿⣿⣿⣿⣿
@@ -70,51 +71,45 @@
 // #include <queue>
 // #include <map>
 // #include <vector>
-#include <stack>
+// #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
-typedef long long ll;
+// typedef long long ll;
 using namespace std;
-const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
-// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD;
 
-ll a[N];
-
-void Solution(int __T)
+void Solution(int T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
-    for (int i = 1; i <= n; i++)
+    int ans = 0;
+    char a;
+    for (int i = 1; i < 11; i++)
     {
-        scanf("%lld", &a[i]);
-    }
-    mx = a[n];
-    while (--n)
-    {
-        if (a[n] > mx)
+        int x = i < 6 ? i : 11 - i;
+        for (int j = 1; j < 11; j++)
         {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
+            int y = j < 6 ? j : 11 - j;
+            scanf("%c", &a);
+            if (a == 'X')
+            {
+                ans += min(x, y);
+            }
         }
-        else
-        {
-            mx = a[n];
-        }
+        scanf("%c", &a);
     }
-    printf("%lld\n", num);
+    printf("%d\n", ans);
 }
 
 int main(int argc, char const *argv[])
 {
-    int __T = 1;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    // cin >> __T;
-    scanf("%d", &__T);
-    for (int i = 0; i < __T; i++)
+    int T = 1;
+    // std::ios::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
+    // std::cout.tie(nullptr);
+    // cin >> T;
+    scanf("%d%c", &T);
+    for (int i = 0; i < T; i++)
     {
         Solution(i);
     }
