@@ -82,7 +82,6 @@ void Solution(int __T)
     else
     {
         ll mx = max(c / a, c / b * 2 - 1);
-        printf("%lld\n", );
     }
 }
 
