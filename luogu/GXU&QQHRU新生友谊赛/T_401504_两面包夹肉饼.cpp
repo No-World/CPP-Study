@@ -79,9 +79,17 @@ void Solution(int __T)
     {
         printf("0\n");
     }
+    else if (b <= a)
+    {
+        printf("%lld\n", c / b * 2 - 1);
+    }
+    else if (b >= a * 2)
+    {
+        printf("%lld\n", c / a);
+    }
     else
     {
-        ll mx = max(c / a, c / b * 2 - 1);
+        printf("%lld\n", max((c - a) / b * 2 + 1, ((c - 2 * a) >= 0 ? (c - 2 * a) / b * 2 + 2 : 0)));
     }
 }
 
