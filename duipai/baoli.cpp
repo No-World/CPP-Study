@@ -1,57 +1,61 @@
-#include <cstdio>
-#include <algorithm>
+// Problem: 背单词
+// Contest: NowCoder
+// URL: https://ac.nowcoder.com/acm/contest/73810/F
+// Memory Limit: 524288 MB
+// Time Limit: 2000 ms
+
+// #include <bits/stdc++.h>
+#include <iostream>
+// #include <cstring>
+// #include <algorithm>
+// #include <cmath>
+// #include <queue>
+// #include <map>
+// #include <vector>
+// #include <stack>
+// #include <set>
+// #include <unordered_map>
+// #include <cstdlib>
 using namespace std;
-int n, q;
-long long a[100010];
-int smaller(int x)
+typedef long long ll;
+// typedef pair<int, int> PII;
+const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+
+void Solution(int __T)
 {
-    int l = 1, r = n, ans = n + 1;
-    while (l <= r)
+    // 注意数组大小
+    ll n, m;
+    scanf("%lld%lld", &n, &m);
+    ll tot = m, next = m, cnt = 1;
+    while (tot < n)
     {
-        int mid = l + r >> 1;
-        if (a[mid] >= x)
+        cnt++;
+        if (next % 2 == 1)
         {
-            ans = mid;
-            r = mid - 1;
+            next *= 3;
+            next++;
         }
         else
         {
-            l = mid + 1;
+            next /= 2;
         }
+        tot += next;
     }
-    return ans - 1;
+    printf("%lld\n", cnt);
 }
-int bigger(int x)
+
+int main(int argc, char const *argv[])
 {
-    int l = 1, r = n, ans = n + 1;
-    while (l <= r)
+    int __T = 1;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    // cin >> __T;
+    // scanf("%d", &__T);
+    for (int i = 0; i < __T; i++)
     {
-        int mid = l + r >> 1;
-        if (a[mid] > x)
-        {
-            ans = mid;
-            r = mid - 1;
-        }
-        else
-        {
-            l = mid + 1;
-        }
-    }
-    return n - ans + 1;
-}
-int main()
-{
-    scanf("%d%d", &n, &q);
-    for (int i = 1; i <= n; i++)
-    {
-        scanf("%lld", &a[i]);
-    }
-    sort(a + 1, a + n + 1);
-    for (int i = 1; i <= q; i++)
-    {
-        int b;
-        scanf("%lld", &b);
-        printf("%d %d\n", smaller(b), bigger(b));
+        Solution(i);
     }
     return 0;
 }

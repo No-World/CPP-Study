@@ -83,27 +83,11 @@ ll a[N];
 
 void Solution(int __T)
 {
-    ll n, mx = 0, num = 0;
-    scanf("%lld", &n);
+    ll n = 10;
     for (int i = 1; i <= n; i++)
     {
-        scanf("%lld", &a[i]);
+        printf("%lld\n", i);
     }
-    mx = a[n];
-    while (--n)
-    {
-        if (a[n] > mx)
-        {
-            int d = (a[n] + mx - 1) / mx;
-            mx = a[n] / d;
-            num += d - 1;
-        }
-        else
-        {
-            mx = a[n];
-        }
-    }
-    printf("%lld\n", num);
 }
 
 int main(int argc, char const *argv[])
@@ -113,7 +97,7 @@ int main(int argc, char const *argv[])
     cin.tie(nullptr);
     cout.tie(nullptr);
     // cin >> __T;
-    scanf("%d", &__T);
+    // scanf("%d", &__T);
     for (int i = 0; i < __T; i++)
     {
         Solution(i);

@@ -1,3 +1,2 @@
-x = int(input())
-y = int(input())
-print(x + y)
+for i in range(100):
+    (print(i))
