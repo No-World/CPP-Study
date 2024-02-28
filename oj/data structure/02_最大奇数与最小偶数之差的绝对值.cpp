@@ -1,6 +1,5 @@
 // #include <bits/stdc++.h>
 #include <iostream>
-#include <decimal/decimal>
 // #include <cstring>
 // #include <algorithm>
 // #include <cmath>
@@ -20,7 +19,21 @@ const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 void Solution(int __T)
 {
     // 注意数组大小
-    decimal::decimal128 a, b;
+    int mx = -inf, mn = inf;
+    for (int i = 0; i < 6; i++)
+    {
+        int x;
+        cin >> x;
+        if (x % 2 == 0)
+        {
+            mn = min(mn, x);
+        }
+        else
+        {
+            mx = max(mx, x);
+        }
+    }
+    cout << (mn > mx ? mn - mx : mx - mn) << '\n';
 }
 
 int main(int argc, char const *argv[])

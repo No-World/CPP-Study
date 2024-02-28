@@ -1,6 +1,11 @@
+// Problem: E. Klever Permutation
+// Contest: Codeforces - Codeforces Round 923 (Div. 3)
+// URL: https://codeforces.com/contest/1927/problem/E
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+
 // #include <bits/stdc++.h>
 #include <iostream>
-#include <decimal/decimal>
 // #include <cstring>
 // #include <algorithm>
 // #include <cmath>
@@ -20,7 +25,6 @@ const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 void Solution(int __T)
 {
     // 注意数组大小
-    decimal::decimal128 a, b;
 }
 
 int main(int argc, char const *argv[])

@@ -1,8 +1,7 @@
 // #include <bits/stdc++.h>
 #include <iostream>
-#include <decimal/decimal>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -17,10 +16,40 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
+struct node
+{
+    int x, y;
+} a[N];
+
+bool cmp(node x, node y)
+{
+    return x.y < y.y;
+}
+
 void Solution(int __T)
 {
     // 注意数组大小
-    decimal::decimal128 a, b;
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < 101; i++)
+    {
+        a[i].x = i;
+        a[i].y = inf;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        scanf("%d", &x);
+        if (a[x].y == inf)
+        {
+            a[x].y = i;
+        }
+    }
+    sort(a, a + 101, cmp);
+    for (int i = 0; a[i].y != inf; i++)
+    {
+        printf("%d ", a[i].x);
+    }
 }
 
 int main(int argc, char const *argv[])

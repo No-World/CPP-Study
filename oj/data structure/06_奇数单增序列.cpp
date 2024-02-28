@@ -1,8 +1,7 @@
 // #include <bits/stdc++.h>
 #include <iostream>
-#include <decimal/decimal>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
 // #include <map>
@@ -17,10 +16,32 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
+int a[N];
+
 void Solution(int __T)
 {
     // 注意数组大小
-    decimal::decimal128 a, b;
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+    sort(a, a + n);
+    bool flag = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (a[i] % 2 == 1)
+        {
+            if (flag)
+            {
+                printf(",");
+            }
+            printf("%d", a[i]);
+            flag = 1;
+        }
+    }
+    printf("\n");
 }
 
 int main(int argc, char const *argv[])

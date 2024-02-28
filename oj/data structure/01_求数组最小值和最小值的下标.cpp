@@ -1,6 +1,5 @@
 // #include <bits/stdc++.h>
 #include <iostream>
-#include <decimal/decimal>
 // #include <cstring>
 // #include <algorithm>
 // #include <cmath>
@@ -17,10 +16,25 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
+int a[N];
+
 void Solution(int __T)
 {
     // 注意数组大小
-    decimal::decimal128 a, b;
+    int mn = inf;
+    for (int i = 0; i < 10; i++)
+    {
+        scanf("%d", &a[i]);
+        mn = min(a[i], mn);
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        if (mn == a[i])
+        {
+            printf("The minimum number is %d.\nIt's subscript is %d.", a[i], i);
+            return;
+        }
+    }
 }
 
 int main(int argc, char const *argv[])
