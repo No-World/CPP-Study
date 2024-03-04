@@ -1,5 +1,5 @@
 // Problem: 06:顺序表的基本运算
-// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 21级数据结构-线性表
+// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
 // URL: http://qdacm.openjudge.cn/ds202302/06/
 // Memory Limit: 4 MB
 // Time Limit: 1000 ms

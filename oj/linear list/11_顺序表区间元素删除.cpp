@@ -1,5 +1,5 @@
 // Problem: 11:顺序表区间元素删除
-// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 21级数据结构-线性表
+// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
 // URL: http://qdacm.openjudge.cn/ds202302/11/
 // Memory Limit: 4 MB
 // Time Limit: 5000 ms

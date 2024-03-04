@@ -1,5 +1,5 @@
 // Problem: 01:字符串插入
-// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 21级数据结构-线性表
+// Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
 // URL: http://qdacm.openjudge.cn/ds202302/01/
 // Memory Limit: 64 MB
 // Time Limit: 1000 ms
