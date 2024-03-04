@@ -1,6 +1,6 @@
 // Problem: 09:寻找下标
 // Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
-// URL: http://qdacm.openjudge.cn/ds202302/09/
+// URL: http://qdacm.openjudge.cn/ds202402/09/
 // Memory Limit: 64 MB
 // Time Limit: 1000 ms
 
@@ -25,6 +25,26 @@ const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 void Solution(int __T)
 {
     // 注意数组大小
+    int n, m = -1;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        scanf("%d", &x);
+        if (x == i)
+        {
+            m = i;
+            break;
+        }
+    }
+    if (m != -1)
+    {
+        printf("%d\n", m);
+    }
+    else
+    {
+        printf("N\n");
+    }
 }
 
 int main(int argc, char const *argv[])

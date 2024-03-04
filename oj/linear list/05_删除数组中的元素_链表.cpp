@@ -1,6 +1,6 @@
 // Problem: 05:删除数组中的元素（链表）
 // Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
-// URL: http://qdacm.openjudge.cn/ds202302/05/
+// URL: http://qdacm.openjudge.cn/ds202402/05/
 // Memory Limit: 64 MB
 // Time Limit: 1000 ms
 

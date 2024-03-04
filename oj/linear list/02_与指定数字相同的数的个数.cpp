@@ -1,6 +1,6 @@
 // Problem: 02:与指定数字相同的数的个数
 // Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
-// URL: http://qdacm.openjudge.cn/ds202302/02/
+// URL: http://qdacm.openjudge.cn/ds202402/02/
 // Memory Limit: 64 MB
 // Time Limit: 1000 ms
 

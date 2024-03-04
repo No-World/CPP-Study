@@ -1,6 +1,6 @@
 // Problem: 03:有序表的归并
 // Contest: OpenJudge - 齐齐哈尔大学程序设计在线评测 - 22级数据结构-线性表
-// URL: http://qdacm.openjudge.cn/ds202302/03/
+// URL: http://qdacm.openjudge.cn/ds202402/03/
 // Memory Limit: 63 MB
 // Time Limit: 1000 ms
 
