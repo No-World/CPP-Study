@@ -1,75 +1,78 @@
-// Problem: 背单词
-// Contest: NowCoder
-// URL: https://ac.nowcoder.com/acm/contest/73810/F
-// Memory Limit: 524288 MB
-// Time Limit: 2000 ms
+// Problem: B. Informatics in MAC
+// Contest: Codeforces Round 932 (Div. 2)
+// URL: https://codeforces.com/contest/1935/problem/B
+// Memory Limit: 256 MB
+// Time Limit: 1000 ms
 
 // #include <bits/stdc++.h>
 #include <iostream>
 // #include <cstring>
-// #include <algorithm>
+#include <algorithm>
 // #include <cmath>
 // #include <queue>
-// #include <map>
-// #include <vector>
+#include <map>
+#include <vector>
 // #include <stack>
 // #include <set>
 // #include <unordered_map>
 // #include <cstdlib>
 using namespace std;
-typedef long long ll;
+// typedef long long ll;
+// typedef __int128 lll;
+// typedef double db;
 // typedef pair<int, int> PII;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 2e5 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+
+map<int, int> remp, mp;
+int a[N], mex[N], remex[N];
 
 void Solution(int __T)
 {
     // 注意数组大小
-    ll n, m;
-    scanf("%lld%lld", &n, &m);
-    ll tot = m, next = m, cnt = 1;
-    while (tot < n && next != 1)
+    int n, num = 0;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
     {
-        cnt++;
-        if (next % 2 == 1)
+        scanf("%d", &a[i]);
+        mp[a[i]]++;
+        while (mp.count(num))
         {
-            next *= 3;
-            next++;
+            num++;
         }
-        else
-        {
-            next /= 2;
-        }
-        tot += next;
+        mex[i] = num;
     }
-    if (next == 1)
+    num = 0;
+    for (int i = n - 1; i > -1; i--)
     {
-        n -= tot;
-        cnt += n / 7 * 3;
-        n %= 7;
-        if (n > 4)
+        remp[a[i]]++;
+        while (remp.count(num))
         {
-            cnt += 2;
+            num++;
         }
-        else if (n > 0)
+        remex[i] = num;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (remex[i + 1] == mex[i])
         {
-            cnt++;
+            printf("2\n1 %d\n%d %d\n", i + 1, i + 2, n);
+            return;
         }
     }
-    printf("%lld\n", cnt);
+    printf("-1\n");
 }
 
 int main(int argc, char const *argv[])
 {
     int __T = 1;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     // cin >> __T;
-    // scanf("%d", &__T);
+    scanf("%d", &__T);
     for (int i = 0; i < __T; i++)
     {
         Solution(i);
+        mp.clear(), remp.clear();
     }
     return 0;
 }
