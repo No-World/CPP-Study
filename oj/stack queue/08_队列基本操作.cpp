@@ -22,11 +22,89 @@ using namespace std;
 // typedef double db;
 // typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
-// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+// const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;typedef int ElemType;
+
+typedef int ElemType;
+typedef struct Lnode
+{
+    ElemType data;
+    struct Lnode *next;
+} Lnode;
+typedef struct
+{
+    Lnode *front, *rear;
+} LinkQueue;
+
+void init(LinkQueue &q)
+{
+    q.front = q.rear = new Lnode;
+    q.front->next = NULL;
+}
+
+void push(LinkQueue &q, ElemType e)
+{
+    Lnode *s = new Lnode;
+    s->data = e;
+    s->next = NULL;
+    q.rear->next = s;
+    q.rear = s;
+}
+
+void pop(LinkQueue &q)
+{
+    Lnode *p = q.front->next;
+    q.front->next = p->next;
+    if (q.rear == p)
+        q.rear = q.front;
+    delete (p);
+}
+
+ElemType front(LinkQueue q)
+{
+    return q.front->next->data;
+}
+
+int size(LinkQueue q)
+{
+    int cnt = 0;
+    Lnode *p = q.front->next;
+    while (p)
+    {
+        cnt++;
+        p = p->next;
+    }
+    return cnt;
+}
+
+void display(LinkQueue q)
+{
+    Lnode *p = q.front->next;
+    while (p)
+    {
+        cout << p->data << " ";
+        p = p->next;
+    }
+    cout << endl;
+}
 
 void Solution(int __T)
 {
     // 注意数组大小
+    LinkQueue q;
+    int x;
+    init(q);
+    while (1)
+    {
+        cin >> x;
+        if (x == -3)
+            break;
+        if (x == -1)
+            pop(q);
+        else if (x == -2)
+            display(q);
+        else if (x >= 10 && x <= 99)
+            push(q, x);
+    }
 }
 
 int main(int argc, char const *argv[])

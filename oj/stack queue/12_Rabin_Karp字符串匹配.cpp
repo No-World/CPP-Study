@@ -6,10 +6,10 @@
 
 // #include <bits/stdc++.h>
 #include <iostream>
-// #include <cstring>
+#include <cstring>
 // #include <algorithm>
 // #include <cmath>
-// #include <queue>
+#include <queue>
 // #include <map>
 // #include <vector>
 // #include <stack>
@@ -24,9 +24,43 @@ using namespace std;
 const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
 
+char s[N];
+queue<int> qee;
+
 void Solution(int __T)
 {
     // 注意数组大小
+    int m, q;
+    scanf("%s%d%d", s, &m, &q);
+    int len = strlen(s);
+    for (int i = 0; i < len; i++)
+    {
+        s[i] -= 96;
+    }
+    int l = 0, r = m, sum = 0;
+    for (int i = 0; i < m; i++)
+    {
+        sum += s[i];
+    }
+    while (r <= len)
+    {
+        if (sum == q)
+        {
+            qee.push(l);
+        }
+        sum += s[r++] - s[l++];
+    }
+    printf("%d\n", qee.size());
+    while (!qee.empty())
+    {
+        int x = qee.front();
+        qee.pop();
+        for (int j = 0; j < m; j++)
+        {
+            printf("%c", s[x + j] + 96);
+        }
+        printf("\n");
+    }
 }
 
 int main(int argc, char const *argv[])
@@ -34,7 +68,7 @@ int main(int argc, char const *argv[])
     int __T = 1;
     ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     // cin >> __T;
-    // scanf("%d", &__T);
+    scanf("%d", &__T);
     for (int i = 0; i < __T; i++)
     {
         Solution(i);

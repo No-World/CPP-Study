@@ -21,12 +21,39 @@ using namespace std;
 // typedef __int128 lll;
 // typedef double db;
 // typedef pair<int, int> PII;
-const int inf = 0x3f3f3f3f, N = 1e3 + 10, mod = 1e9 + 7;
+const int inf = 0x3f3f3f3f, N = 1e6 + 10, mod = 1e9 + 7;
 // const ll INF = __LONG_LONG_MAX__, MOD = 1e9 + 7;
+
+int x[N << 1];
+int head = N + 1, tail = N;
 
 void Solution(int __T)
 {
     // 注意数组大小
+    int n;
+    scanf("%d", &n);
+    int a;
+    while (n--)
+    {
+        scanf("%d", &a);
+        switch (a)
+        {
+        case -1:
+            if (head <= tail)
+            {
+                printf("%d\n", x[head++]);
+            }
+            break;
+        case 0:
+            for (int t = tail, q = head; ((tail - 1) <= (N << 1)) && (tail - head + 51 <= N) && q <= t; q++)
+            {
+                x[++tail] = x[q];
+            }
+            break;
+        default:
+            x[--head] = a;
+        }
+    }
 }
 
 int main(int argc, char const *argv[])
