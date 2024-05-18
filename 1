@@ -1,0 +1,1 @@
+fetch("https://api.minecraftservices.com/minecraft/cape/15year", { method: "POST", headers: new Headers({ "Authorization": "Bearer " + document.cookie.match(new RegExp("(^| )bearer_token=(【^;】*)(;|$)"))【2】 }) }).then(res => { if (res.status == 204) window.alert("成功"); else window.alert("失败，状态：" + res.status); })
