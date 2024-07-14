@@ -6,7 +6,6 @@ struct Sqlist
     ElemType data[MaxSize];
     int size;
 };
-
 int BinarySearch(Sqlist *List, ElemType x)
 {
     int l = 0, r = List->size - 1;
